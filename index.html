@@ -3,121 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DriveLink NYC - Find Your Next TLC Vehicle</title>
+  <title>DriveLink NYC</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f7f9fb;
-      color: #333;
+      background-color: #f4f4f4;
+      text-align: center;
+      margin: 0;
+      padding: 0;
     }
     header {
       background-color: #000;
-      color: #fff;
       padding: 20px;
-      text-align: center;
     }
-    nav {
-      background-color: #333;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 10px;
+    header img {
+      width: 320px;
+      height: auto;
     }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .hero {
-      background: url('https://images.unsplash.com/photo-1563720223083-d46af4295940') center/cover;
-      color: white;
-      text-align: center;
-      padding: 80px 20px;
-    }
-    .hero h1 {
-      font-size: 2.5em;
-      margin-bottom: 0.5em;
-    }
-    .hero p {
-      font-size: 1.2em;
-    }
-    .cta {
-      background-color: #ffc107;
+    main {
       padding: 20px;
-      text-align: center;
     }
-    .cta a {
-      background-color: #000;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .features {
-      padding: 40px 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .feature {
-      background: #fff;
+    form {
+      background-color: #fff;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 500px;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 20px;
-      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #0074D9;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
     footer {
       background-color: #000;
       color: #fff;
-      padding: 20px;
-      text-align: center;
-      font-size: 0.9em;
+      padding: 10px;
+    }
+    footer a {
+      color: #fff;
     }
   </style>
 </head>
 <body>
+
 <header>
-  <img src="logo.png" alt="DriveLink NYC logo" style="max-width: 90vw; width: 320px; height: auto;  margin: 30px auto 10px; display: block;" />
-  <h1>DriveLink NYC</h1>
-  <p>Connecting Drivers to TLC Rentals, Lease-to-Own, and Yellow Cab Garages</p>
+  <img src="logo.png" alt="DriveLink NYC logo" />
 </header>
-  <nav>
-    <a href="#features">Features</a>
-    <a href="#listings">List a Vehicle</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <div class="hero">
-    <h1>Need a TLC Car in NYC?</h1>
-    <p>Find rental, lease-to-own, or yellow cab options from trusted dealerships & garages</p>
-  </div>
-  <div class="cta">
-    <a href="#">Browse Listings</a>
-  </div>
-  <section id="features" class="features">
-    <div class="feature">
-      <h2>Rental & Lease Options</h2>
-      <p>Explore flexible TLC rentals and lease-to-own offers across NYC.</p>
-    </div>
-    <div class="feature">
-      <h2>Yellow Taxi Access</h2>
-      <p>Connect directly with yellow cab garages for medallion rentals.</p>
-    </div>
-    <div class="feature">
-      <h2>Easy Listing Dashboard</h2>
-      <p>Dealers and individuals can post cars with just a few clicks.</p>
-    </div>
-    <div class="feature">
-      <h2>Mobile Friendly</h2>
-      <p>Built for drivers on the move. Search and apply from your phone.</p>
-    </div>
-  </section>
-  <footer>
-    <p>&copy; 2025 DriveLink NYC. All rights reserved.</p>
-	<p style="text-align: center;">
-   📩Contact us at: <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a>
-</p>
-  </footer>
+
+<main>
+  <h1>Welcome to DriveLink NYC</h1>
+  <p>Your marketplace for TLC rentals, lease-to-own, and yellow taxi connections</p>
+
+  <form action="mailto:info@drivelinknyc.com" method="post" enctype="text/plain">
+    <h2>Get in Touch</h2>
+    <input type="text" name="Full Name" placeholder="Your Name" required />
+    <input type="email" name="Email" placeholder="Your Email" required />
+    <input type="tel" name="Phone" placeholder="Your Phone Number" required />
+    <select name="Role" required>
+      <option value="">I'm a...</option>
+      <option value="Driver">Driver</option>
+      <option value="Dealership">Dealership</option>
+      <option value="Garage">Garage</option>
+      <option value="Car Owner">Car Owner (Lease-to-Own or Rental)</option>
+    </select>
+    <textarea name="Message" placeholder="Your Message" rows="4" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</main>
+
+<footer>
+  <p>&copy; 2025 DriveLink NYC. All rights reserved.</p>
+  <p>📩 Contact us at: <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
+</footer>
+
 </body>
 </html>
+
