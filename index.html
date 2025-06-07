@@ -122,22 +122,26 @@
 </section>
 
 <section class="section">
-  <form id="contact-form" action="mailto:info@drivelinknyc.com" method="POST" enctype="text/plain">
-    <input type="text" name="Name" placeholder="Your Name" required />
-    <input type="email" name="Email" placeholder="Your Email" required />
-    <input type="tel" name="Phone" placeholder="Your Phone Number" required />
-    <select name="Role" required>
+  <form action="https://formsubmit.co/info@drivelinknyc.com" method="POST">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://drivelinknyc.com/thank-you.html">
+
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <input type="tel" name="phone" placeholder="Your Phone Number" required />
+
+    <select name="role" required>
       <option value="">I'm a...</option>
       <option value="Driver">Driver</option>
       <option value="Dealership">Dealership</option>
       <option value="Garage">Garage</option>
       <option value="Car Owner">Car Owner (Lease-to-Own or Rental)</option>
     </select>
-    <textarea name="Message" placeholder="Your Message" rows="4" required></textarea>
+
+    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
     <button type="submit">Submit</button>
   </form>
 </section>
-
 
 <footer>
   <p>&copy; 2025 DriveLink NYC. All rights reserved.</p>
@@ -146,4 +150,5 @@
 
 </body>
 </html>
+
 
