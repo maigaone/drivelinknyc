@@ -144,9 +144,12 @@
         e.preventDefault();
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-       fetch(scriptURL, {
+  fetch(scriptURL, {
   method: 'POST',
-  body: new FormData(form)  // <== use FormData, not JSON.stringify()
+  body: JSON.stringify(data),
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
         .then(response => {
