@@ -57,23 +57,36 @@
       margin: auto;
     }
 
-    .cards {
+    .tabs {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 20px;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
     }
 
-    .card {
+    .tab {
+      padding: 12px 25px;
+      border-radius: 30px;
+      background-color: #0074D9;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .tab:hover {
+      background-color: #005fa3;
+    }
+
+    .tab-content {
+      display: none;
       background-color: white;
       padding: 20px;
-      flex: 1 1 30%;
+      border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 8px;
     }
 
-    .card h3 {
-      margin-top: 0;
+    .tab-content.active {
+      display: block;
     }
 
     form {
@@ -127,17 +140,36 @@
 </div>
 
 <section class="section">
+  <div class="tabs">
+    <div class="tab" onclick="showTab('driver')">For Drivers</div>
+    <div class="tab" onclick="showTab('dealer')">For Dealerships</div>
+    <div class="tab" onclick="showTab('garage')">For Taxi Garages</div>
+  </div>
+
+  <div id="driver" class="tab-content active">
+    <h3>For Drivers</h3>
+    <p>Find TLC-licensed cars for rent, lease-to-own deals, or yellow taxis across NYC with ease.</p>
+  </div>
+
+  <div id="dealer" class="tab-content">
+    <h3>For Dealerships</h3>
+    <p>List your TLC vehicles for free. Get connected with active, ready-to-drive rideshare professionals.</p>
+  </div>
+
+  <div id="garage" class="tab-content">
+    <h3>For Taxi Garages</h3>
+    <p>Promote your available yellow taxis for weekly or daily rental. Get bookings directly from the app.</p>
+  </div>
+</section>
+
+<section class="section">
   <h2>Get in Touch</h2>
   <form action="https://formsubmit.co/info@drivelinknyc.com" method="POST">
-    <!-- Hidden fields for FormSubmit -->
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_next" value="https://drivelinknyc.com/thank-you.html">
     <input type="hidden" name="_origin" value="https://drivelinknyc.com">
-
-    <!-- Honeypot to prevent spam -->
     <input type="text" name="_honey" style="display:none">
 
-    <!-- Visible form fields -->
     <input type="text" name="name" placeholder="Your Name" required />
     <input type="email" name="email" placeholder="Your Email" required />
     <input type="tel" name="phone" placeholder="Your Phone Number" required />
@@ -159,6 +191,15 @@
   <p>&copy; 2025 DriveLink NYC. All rights reserved.</p>
   <p>📩 Contact: <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
 </footer>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
+  }
+</script>
 
 </body>
 </html>
