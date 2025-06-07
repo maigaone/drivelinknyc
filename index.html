@@ -144,11 +144,11 @@
         e.preventDefault();
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-        fetch(scriptURL, {
-          method: 'POST',
-          body: new FormData(form)
-          
-        })
+       fetch(scriptURL, {
+  method: 'POST',
+  body: new FormData(form)  // <== use FormData, not JSON.stringify()
+})
+
         .then(response => {
           alert('Thank you! Your information has been submitted.');
           form.reset();
