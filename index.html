@@ -1,153 +1,118 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DriveLink NYC</title>
-
-  <!-- 🔥 Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
-    }
-
-    header {
-      background-color: #000;
-      text-align: center;
-      padding: 20px 0;
-    }
-
-    header img {
-      max-width: 260px;
-      animation: fadeIn 0.8s ease-in;
-    }
-
-    .navbar {
-      background-color: #222;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 10px 0;
-    }
-
-    .navbar a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-
-    .navbar a:hover {
-      background-color: #0074D9;
-      border-radius: 4px;
-    }
-
-    .hero {
-      background: linear-gradient(to right, #0074D9, #00c3ff);
-      color: white;
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: 36px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      margin-top: 10px;
-    }
-
-    .section {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .tab-content {
-      display: none;
-      background: white;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    form {
-      background-color: white;
-      padding: 20px;
-      max-width: 600px;
-      margin: 40px auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #0074D9;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    footer {
-      background-color: #000;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-    }
-
-    footer a {
-      color: #fff;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="DriveLink NYC is your trusted TLC rental marketplace, connecting NYC drivers with dealerships, garages, and vehicle owners.">
-  <meta name="keywords" content="TLC rentals, NYC drivers, lease-to-own cars, yellow taxi rentals, DriveLink NYC, rideshare vehicles, Uber, Lyft">
-  <meta name="author" content="DriveLink NYC">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="DriveLink NYC – TLC Rental Marketplace">
-  <meta property="og:description" content="Find and rent TLC cars, lease-to-own vehicles, or yellow taxis. DriveLink connects NYC drivers with trusted dealers and garages.">
-  <meta property="og:image" content="https://drivelinknyc.com/logo-new.png">
-  <meta property="og:url" content="https://drivelinknyc.com">
-  <meta property="og:type" content="website">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DriveLink NYC – TLC Rental Marketplace">
-  <meta name="twitter:description" content="Connecting NYC drivers with trusted TLC rentals, lease-to-own cars, and taxi garages.">
-  <meta name="twitter:image" content="https://drivelinknyc.com/logo-new.png">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DriveLink NYC</title>
+<!-- 🔥 Favicon -->
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  header {
+    background-color: #000;
+    text-align: center;
+    padding: 20px 0;
+  }
+  header img {
+    max-width: 260px;
+    animation: fadeIn 0.8s ease-in;
+  }
+  .navbar {
+    background-color: #222;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 0;
+  }
+  .navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  .navbar a:hover {
+    background-color: #0074D9;
+    border-radius: 4px;
+  }
+  .hero {
+    background: linear-gradient(to right, #0074D9, #00c3ff);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: 36px;
+  }
+  .hero p {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  .section {
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: auto;
+  }
+  .tab-content {
+    display: none;
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+  .tab-content.active {
+    display: block;
+  }
+  form {
+    background-color: white;
+    padding: 20px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #0074D9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  footer {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+  footer a {
+    color: #fff;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
 </head>
-
 <body>
+
 <header>
   <img src="logo-new.png" alt="DriveLink NYC Logo" />
 </header>
@@ -157,6 +122,7 @@
   <a onclick="showTab('dealerships')">For Dealerships</a>
   <a onclick="showTab('garages')">For Garages</a>
   <a href="#contact">Contact</a>
+  <a href="https://script.google.com/macros/s/AKfycbybeVWe0lgswcwy2OBzZbigjLITmlgG9_C05-d-3rDFwlCIbY6K4J2atUDxggIdG9ZJRA/exec" target="_blank">List Your Vehicle</a>
 </nav>
 
 <div class="hero">
@@ -164,29 +130,15 @@
   <p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
 </div>
 
-<!-- ✅ About Us Section -->
-<section class="section" id="about">
-  <h2>About Us</h2>
-  <p>
-    DriveLink NYC is a digital marketplace built to connect New York City drivers with trusted TLC rental providers, dealerships, and garages. Our goal is to simplify the process of finding reliable, TLC-ready vehicles for professional drivers.
-  </p>
-  <p>
-    Whether you're looking to rent a vehicle, manage your fleet, or list your garage’s yellow taxis, DriveLink NYC offers a streamlined, secure, and easy-to-use platform. We’re focused on transparency, trust, and efficiency for every user.
-  </p>
-</section>
-
-<!-- Tabs Section -->
 <section class="section">
   <div id="drivers" class="tab-content active">
     <h2>For Drivers</h2>
     <p>Find TLC-ready vehicles for rent, lease-to-own options, or yellow cabs in all boroughs. Whether you drive full-time or part-time, our platform helps you locate vehicles that suit your schedule and earnings goals.</p>
   </div>
-
   <div id="dealerships" class="tab-content">
     <h2>For Dealerships</h2>
     <p>List your TLC-licensed vehicles for free and connect directly with active drivers in NYC. Our platform offers visibility and tools to manage leads and boost your vehicle utilization.</p>
   </div>
-
   <div id="garages" class="tab-content">
     <h2>For Garages</h2>
     <p>Post your yellow taxis for weekly or daily rentals. Garages can manage listings, view inquiries, and receive direct contact from drivers ready to work. Simple. Fast. Effective.</p>
