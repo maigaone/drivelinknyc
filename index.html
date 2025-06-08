@@ -57,6 +57,28 @@
       max-width: 1000px;
       margin: auto;
     }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .tab {
+      padding: 10px 20px;
+      background-color: #eee;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .tab:hover {
+      background-color: #0074D9;
+      color: white;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
     form {
       background-color: white;
       padding: 20px;
@@ -101,9 +123,9 @@
 
 <nav class="navbar">
   <a href="index.html">Home</a>
-  <a href="drivers.html">For Drivers</a>
-  <a href="dealerships.html">For Dealerships</a>
-  <a href="garages.html">For Garages</a>
+  <a onclick="showTab('driver')">For Drivers</a>
+  <a onclick="showTab('dealer')">For Dealerships</a>
+  <a onclick="showTab('garage')">For Garages</a>
   <a href="#contact">Contact</a>
 </nav>
 
@@ -111,6 +133,27 @@
   <h1>Your Trusted TLC Rental Marketplace</h1>
   <p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
 </div>
+
+<section class="section">
+  <div class="tabs">
+    <div class="tab" onclick="showTab('driver')">For Drivers</div>
+    <div class="tab" onclick="showTab('dealer')">For Dealerships</div>
+    <div class="tab" onclick="showTab('garage')">For Garages</div>
+  </div>
+
+  <div id="driver" class="tab-content active">
+    <h3>For Drivers</h3>
+    <p>Find TLC‑licensed cars for rent, lease‑to‑own deals, or yellow taxis across NYC with ease.</p>
+  </div>
+  <div id="dealer" class="tab-content">
+    <h3>For Dealerships</h3>
+    <p>List your TLC vehicles and connect with ready-to-drive rideshare professionals.</p>
+  </div>
+  <div id="garage" class="tab-content">
+    <h3>For Taxi Garages</h3>
+    <p>Promote yellow taxi availability for weekly or daily rentals directly to drivers.</p>
+  </div>
+</section>
 
 <section class="section" id="contact">
   <h2>Get in Touch</h2>
@@ -137,6 +180,13 @@
   <p>&copy; 2025 DriveLink NYC. All rights reserved.</p>
   <p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
 </footer>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+</script>
 
 </body>
 </html>
