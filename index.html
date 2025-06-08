@@ -1,30 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DriveLink NYC</title>
 
   <!-- 🔥 Favicon -->
-  <link rel="icon" href="favicon.png" type="image/x-icon" />
-
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="DriveLink NYC is your trusted TLC rental marketplace, connecting NYC drivers with dealerships, garages, and vehicle owners." />
-  <meta name="keywords" content="TLC rentals, NYC drivers, lease-to-own cars, yellow taxi rentals, DriveLink NYC, rideshare vehicles, Uber, Lyft" />
-  <meta name="author" content="DriveLink NYC" />
-
-  <!-- Open Graph (Facebook & LinkedIn Preview) -->
-  <meta property="og:title" content="DriveLink NYC – TLC Rental Marketplace" />
-  <meta property="og:description" content="Find and rent TLC cars, lease-to-own vehicles, or yellow taxis. DriveLink connects NYC drivers with trusted dealers and garages." />
-  <meta property="og:image" content="https://drivelinknyc.com/logo-new.png" />
-  <meta property="og:url" content="https://drivelinknyc.com" />
-  <meta property="og:type" content="website" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="DriveLink NYC – TLC Rental Marketplace" />
-  <meta name="twitter:description" content="Connecting NYC drivers with trusted TLC rentals, lease-to-own cars, and taxi garages." />
-  <meta name="twitter:image" content="https://drivelinknyc.com/logo-new.png" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <style>
     body {
@@ -145,10 +127,27 @@
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="DriveLink NYC is your trusted TLC rental marketplace, connecting NYC drivers with dealerships, garages, and vehicle owners.">
+  <meta name="keywords" content="TLC rentals, NYC drivers, lease-to-own cars, yellow taxi rentals, DriveLink NYC, rideshare vehicles, Uber, Lyft">
+  <meta name="author" content="DriveLink NYC">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="DriveLink NYC – TLC Rental Marketplace">
+  <meta property="og:description" content="Find and rent TLC cars, lease-to-own vehicles, or yellow taxis. DriveLink connects NYC drivers with trusted dealers and garages.">
+  <meta property="og:image" content="https://drivelinknyc.com/logo-new.png">
+  <meta property="og:url" content="https://drivelinknyc.com">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DriveLink NYC – TLC Rental Marketplace">
+  <meta name="twitter:description" content="Connecting NYC drivers with trusted TLC rentals, lease-to-own cars, and taxi garages.">
+  <meta name="twitter:image" content="https://drivelinknyc.com/logo-new.png">
 </head>
 
 <body>
-
 <header>
   <img src="logo-new.png" alt="DriveLink NYC Logo" />
 </header>
@@ -165,6 +164,18 @@
   <p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
 </div>
 
+<!-- ✅ About Us Section -->
+<section class="section" id="about">
+  <h2>About Us</h2>
+  <p>
+    DriveLink NYC is a digital marketplace built to connect New York City drivers with trusted TLC rental providers, dealerships, and garages. Our goal is to simplify the process of finding reliable, TLC-ready vehicles for professional drivers.
+  </p>
+  <p>
+    Whether you're looking to rent a vehicle, manage your fleet, or list your garage’s yellow taxis, DriveLink NYC offers a streamlined, secure, and easy-to-use platform. We’re focused on transparency, trust, and efficiency for every user.
+  </p>
+</section>
+
+<!-- Tabs Section -->
 <section class="section">
   <div id="drivers" class="tab-content active">
     <h2>For Drivers</h2>
@@ -185,14 +196,12 @@
 <section class="section" id="contact">
   <h2>Get in Touch</h2>
   <form action="https://formsubmit.co/info@drivelinknyc.com" method="POST">
-    <input type="hidden" name="_captcha" value="false" />
-    <input type="hidden" name="_next" value="https://drivelinknyc.com/thank-you.html" />
-    <input type="hidden" name="_origin" value="https://drivelinknyc.com" />
-
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://drivelinknyc.com/thank-you.html">
+    <input type="hidden" name="_origin" value="https://drivelinknyc.com">
     <input type="text" name="name" placeholder="Your Name" required />
     <input type="email" name="email" placeholder="Your Email" required />
     <input type="tel" name="phone" placeholder="Your Phone Number" required />
-
     <select name="role" required>
       <option value="">I'm a...</option>
       <option value="Driver">Driver</option>
@@ -200,7 +209,6 @@
       <option value="Garage">Garage</option>
       <option value="Car Owner">Car Owner (Lease-to-Own or Rental)</option>
     </select>
-
     <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
     <button type="submit">Submit</button>
   </form>
