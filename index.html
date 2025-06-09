@@ -1,12 +1,13 @@
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>DriveLink NYC</title>
 <!-- 🔥 Favicon -->
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <style>
   body {
     margin: 0;
@@ -108,90 +109,113 @@
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+.testimonial {
+  background-color: #fff;
+  border-left: 5px solid #0074D9;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+.testimonial blockquote {
+  margin: 0;
+  font-style: italic;
+  color: #555;
+}
+.testimonial p {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+}
 </style>
 </head>
 <body>
-
 <header>
-  <img src="logo-new.png" alt="DriveLink NYC Logo" />
+<img alt="DriveLink NYC Logo" src="logo-new.png"/>
 </header>
-
 <nav class="navbar">
-  <a onclick="showTab('drivers')">For Drivers</a>
-  <a onclick="showTab('dealerships')">For Dealerships</a>
-  <a onclick="showTab('garages')">For Garages</a>
-  <a href="#contact">Contact</a>
-  <a href="#list-your-vehicle">List Your Vehicle</a>
+<a onclick="showTab('drivers')">For Drivers</a>
+<a onclick="showTab('dealerships')">For Dealerships</a>
+<a onclick="showTab('garages')">For Garages</a>
+<a href="#contact">Contact</a>
+<a href="#list-your-vehicle">List Your Vehicle</a>
 </nav>
-
 <div class="hero">
-  <h1>Your Trusted TLC Rental Marketplace</h1>
-  <p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
+<h1>Your Trusted TLC Rental Marketplace</h1>
+<p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
 </div>
-
 <section class="section">
-  <div id="drivers" class="tab-content active">
-    <h2>For Drivers</h2>
-    <p>Find TLC-ready vehicles for rent, lease-to-own options, or yellow cabs in all boroughs. Whether you drive full-time or part-time, our platform helps you locate vehicles that suit your schedule and earnings goals.</p>
-  </div>
-  <div id="dealerships" class="tab-content">
-    <h2>For Dealerships</h2>
-    <p>List your TLC-licensed vehicles for free and connect directly with active drivers in NYC. Our platform offers visibility and tools to manage leads and boost your vehicle utilization.</p>
-  </div>
-  <div id="garages" class="tab-content">
-    <h2>For Garages</h2>
-    <p>Post your yellow taxis for weekly or daily rentals. Garages can manage listings, view inquiries, and receive direct contact from drivers ready to work. Simple. Fast. Effective.</p>
-  </div>
+<div class="tab-content active" id="drivers">
+<h2>For Drivers</h2>
+<p>Find TLC-ready vehicles for rent, lease-to-own options, or yellow cabs in all boroughs. Whether you drive full-time or part-time, our platform helps you locate vehicles that suit your schedule and earnings goals.</p>
+</div>
+<div class="tab-content" id="dealerships">
+<h2>For Dealerships</h2>
+<p>List your TLC-licensed vehicles for free and connect directly with active drivers in NYC. Our platform offers visibility and tools to manage leads and boost your vehicle utilization.</p>
+</div>
+<div class="tab-content" id="garages">
+<h2>For Garages</h2>
+<p>Post your yellow taxis for weekly or daily rentals. Garages can manage listings, view inquiries, and receive direct contact from drivers ready to work. Simple. Fast. Effective.</p>
+</div>
 </section>
-
 <section class="section" id="list-your-vehicle">
-  <h2>List Your Vehicle</h2>
-  <form 
-action="https://script.google.com/macros/s/AKfycby48LSjahU4nk_Jbb1BZiBrkS571aRxnsPTedYRIukusdIEQHhLmwjXEy03KT7Oh3nD1Q/exec" method="POST">
-    <input type="text" name="ownerName" placeholder="Your Name" required />
-    <input type="email" name="email" placeholder="Your Email" required />
-    <input type="tel" name="phone" placeholder="Your Phone Number" required />
-    <input type="text" name="vehicleType" placeholder="Vehicle Type (e.g., Camry, Prius, Yellow Cab)"/> 
-    <input type="text" name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)"/>
-    <input type="text" name="rentalType" placeholder="Rental Type# (e.g., Weekly, Monthly)"/>
-    <input type="text" name="location" placeholder="Location# (e.g., Bronx, Brooklyn)"/>
-    <textarea name="additionalDetails" rows="4" placeholder="Additional details about the vehicle (rental terms, availability, etc.)" required></textarea>
-    <button type="submit">Submit Listing</button>
-  </form>
+<h2>List Your Vehicle</h2>
+<form action="https://script.google.com/macros/s/AKfycby48LSjahU4nk_Jbb1BZiBrkS571aRxnsPTedYRIukusdIEQHhLmwjXEy03KT7Oh3nD1Q/exec" method="POST">
+<input name="ownerName" placeholder="Your Name" required="" type="text"/>
+<input name="email" placeholder="Your Email" required="" type="email"/>
+<input name="phone" placeholder="Your Phone Number" required="" type="tel"/>
+<input name="vehicleType" placeholder="Vehicle Type (e.g., Camry, Prius, Yellow Cab)" type="text"/>
+<input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" type="text"/>
+<input name="rentalType" placeholder="Rental Type# (e.g., Weekly, Monthly)" type="text"/>
+<input name="location" placeholder="Location# (e.g., Bronx, Brooklyn)" type="text"/>
+<textarea name="additionalDetails" placeholder="Additional details about the vehicle (rental terms, availability, etc.)" required="" rows="4"></textarea>
+<button type="submit">Submit Listing</button>
+</form>
 </section>
-
-<section class="section" id="contact">
-  <h2>Get in Touch</h2>
-  <form action="https://formsubmit.co/info@drivelinknyc.com" method="POST">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_next" value="https://drivelinknyc.com/thank-you.html">
-    <input type="hidden" name="_origin" value="https://drivelinknyc.com">
-    <input type="text" name="name" placeholder="Your Name" required />
-    <input type="email" name="email" placeholder="Your Email" required />
-    <input type="tel" name="phone" placeholder="Your Phone Number" required />
-    <select name="role" required>
-      <option value="">I'm a...</option>
-      <option value="Driver">Driver</option>
-      <option value="Dealership">Dealership</option>
-      <option value="Garage">Garage</option>
-      <option value="Car Owner">Car Owner (Lease-to-Own or Rental)</option>
-    </select>
-    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
-    <button type="submit">Submit</button>
-  </form>
+<section class="section" id="testimonials">
+<h2>What Our Users Say</h2>
+<div class="testimonial">
+<blockquote>“DriveLink NYC helped me find a TLC car within hours. Highly recommended!”</blockquote>
+<p>- Jamal A., Driver</p>
+</div>
+<div class="testimonial">
+<blockquote>“We filled three TLC rentals in one week after listing on DriveLink. Incredible exposure!”</blockquote>
+<p>- Sarah B., Dealership Manager</p>
+</div>
+<div class="testimonial">
+<blockquote>“Simple to use and effective. I always find drivers for our yellow cabs quickly.”</blockquote>
+<p>- Mike R., Garage Owner</p>
+</div>
+</section><section class="section" id="contact">
+<h2>Get in Touch</h2>
+<form action="https://formsubmit.co/info@drivelinknyc.com" method="POST">
+<input name="_captcha" type="hidden" value="false"/>
+<input name="_next" type="hidden" value="https://drivelinknyc.com/thank-you.html"/>
+<input name="_origin" type="hidden" value="https://drivelinknyc.com"/>
+<input name="name" placeholder="Your Name" required="" type="text">
+<input name="email" placeholder="Your Email" required="" type="email">
+<input name="phone" placeholder="Your Phone Number" required="" type="tel">
+<select name="role" required="">
+<option value="">I'm a...</option>
+<option value="Driver">Driver</option>
+<option value="Dealership">Dealership</option>
+<option value="Garage">Garage</option>
+<option value="Car Owner">Car Owner (Lease-to-Own or Rental)</option>
+</select>
+<textarea name="message" placeholder="Your Message" required="" rows="4"></textarea>
+<button type="submit">Submit</button>
+</input></input></input></form>
 </section>
-
 <footer>
-  <p>&copy; 2025 DriveLink NYC. All rights reserved.</p>
-  <p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
+<p>© 2025 DriveLink NYC. All rights reserved.</p>
+<p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
 </footer>
-
 <script>
   function showTab(id) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.getElementById(id).classList.add('active');
   }
 </script>
-
 </body>
 </html>
