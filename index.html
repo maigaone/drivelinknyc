@@ -220,11 +220,27 @@ action="https://script.google.com/macros/s/AKfycby48LSjahU4nk_Jbb1BZiBrkS571aRxn
 </footer>
 
 <script>
-  function showTab(id) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-  }
+  document.getElementById("vehicleForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const form = e.target;
+
+    fetch(form.action, {
+      method: "POST",
+      body: new FormData(form)
+    })
+    .then(response => response.text())
+    .then(html => {
+      const newWindow = window.open();
+      newWindow.document.write(html);
+      newWindow.document.close();
+    })
+    .catch(error => {
+      console.error("Submission failed:", error);
+      alert("Something went wrong. Please try again later.");
+    });
+  });
 </script>
+
 
 </body>
 </html>
