@@ -114,7 +114,7 @@
 
 <section class="section" id="contact">
   <h2>Get in Touch</h2>
-  <form action="https://script.google.com/macros/s/AKfycbyKe8iPs5hoPKY4nDueBpbGVdPSV6cPaNBtMlqQqPHuBaocNdqEEXhT9dwNNzqz6kPSZw/exec" method="POST">
+  <form id="contactForm">
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_next" value="https://drivelinknyc.com/thank-you.html">
     <input type="hidden" name="_origin" value="https://drivelinknyc.com">
@@ -138,15 +138,14 @@
   <p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
 </footer>
 
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const contactForm = document.getElementById("contactForm");
-
     if (contactForm) {
       contactForm.addEventListener("submit", function (e) {
         e.preventDefault();
         const formData = new FormData(contactForm);
-
         fetch("https://script.google.com/macros/s/AKfycbyKe8iPs5hoPKY4nDueBpbGVdPSV6cPaNBtMlqQqPHuBaocNdqEEXhT9dwNNzqz6kPSZw/exec", {
           method: "POST",
           body: formData
@@ -165,7 +164,6 @@
     }
   });
 </script>
-
 
 </body>
 </html>
