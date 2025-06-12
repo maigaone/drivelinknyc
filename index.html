@@ -6,6 +6,16 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>DriveLink NYC</title>
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
+
+<link rel="manifest" href="manifest.json" />
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js").then(() => {
+      console.log("Service Worker Registered");
+    });
+  }
+
+</script>
 <style>
     body {
       margin: 0;
