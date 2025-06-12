@@ -297,5 +297,31 @@
 </script>
 
 
+
+<button id="installBtn" style="position: fixed; bottom: 20px; right: 20px; background: #0074D9; color: white; border: none; padding: 10px 20px; border-radius: 5px; display: none; z-index: 1000;">Install DriveLink NYC</button>
+<script>
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'block';
+  });
+
+  installBtn.addEventListener('click', () => {
+    installBtn.style.display = 'none';
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      deferredPrompt = null;
+    });
+  });
+</script>
+
 </body>
 </html>
