@@ -1,22 +1,13 @@
 
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open('drivelink-cache-v1').then(cache => {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        '/favicon.ico',
-        '/logo-new.png'
-      ]);
-    })
-  );
+self.addEventListener('install', function(event) {
+  console.log('[ServiceWorker] Install');
   self.skipWaiting();
 });
 
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
-  );
+self.addEventListener('activate', function(event) {
+  console.log('[ServiceWorker] Activate');
+});
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(fetch(event.request));
 });
