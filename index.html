@@ -1,27 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DriveLink NYC</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0074D9">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>DriveLink NYC</title>
-<link href="favicon.ico" rel="icon" type="image/x-icon"/>
-
-<link rel="manifest" href="manifest.json" />
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js").then(() => {
-      console.log("Service Worker Registered");
-    });
-  }
-
-</script>
-<style>
+  <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  
+  <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -51,7 +42,7 @@
       padding: 8px 12px;
       cursor: pointer;
     }
-    .navbar a:hover {
+    .navbar a:hover, .navbar a.active {
       background-color: #0074D9;
       border-radius: 4px;
     }
@@ -91,6 +82,17 @@
       margin-top: 10px;
       border-radius: 4px;
       border: 1px solid #ccc;
+    }
+    .file-input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px dashed #0074D9;
+      border-radius: 5px;
+      background: #f8f9fa;
+    }
+    .file-input:hover {
+      background: #e9f5ff;
     }
     button {
       margin-top: 15px;
@@ -133,213 +135,206 @@
       color: #333;
     }
   
-@media screen and (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .navbar a {
-    width: 100%;
-    text-align: center;
-    padding: 12px 0;
-  }
-
-  form {
-    margin: 20px 10px;
-    padding: 15px;
-  }
-
-  input, select, textarea {
-    font-size: 16px;
-  }
-
-  .hero h1 {
-    font-size: 24px;
-  }
-
-  .hero p {
-    font-size: 16px;
-  }
-}
-</style>
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#0074D9" />
-
-
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-</head>
-<body>
-<header>
-<img alt="DriveLink NYC Logo" src="logo-new.png"/>
-</header>
-<nav class="navbar">
-<a onclick="showTab('drivers')">For Drivers</a>
-<a onclick="showTab('dealerships')">For Dealerships</a>
-<a onclick="showTab('garages')">For Garages</a>
-<a href="#contact">Contact</a>
-<a href="#list-your-vehicle">List Your Vehicle</a>
-<a href="https://docs.google.com/spreadsheets/d/11ryYhF0LFZmosoeD-hobUso50T44QwOLZWrqouMm7sA/edit?usp=sharing" target="_blank">View Listings</a>
-</nav>
-<div class="hero">
-<h1>Your Trusted TLC Rental Marketplace</h1>
-<p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
-</div>
-<section class="section">
-<div class="tab-content active" id="drivers">
-<h2>For Drivers</h2>
-<p>Find TLC-ready vehicles for rent, lease-to-own options, or yellow cabs in all boroughs. Whether you drive full-time or part-time, our platform helps you locate vehicles that suit your schedule and earnings goals.</p>
-</div>
-<div class="tab-content" id="dealerships">
-<h2>For Dealerships</h2>
-<p>List your TLC-licensed vehicles for free and connect directly with active drivers in NYC. Our platform offers visibility and tools to manage leads and boost your vehicle utilization.</p>
-</div>
-<div class="tab-content" id="garages">
-<h2>For Garages</h2>
-<p>Post your yellow taxis for weekly or daily rentals. Garages can manage listings, view inquiries, and receive direct contact from drivers ready to work. Simple. Fast. Effective.</p>
-</div>
-</section>
-<section class="section" id="list-your-vehicle">
-<h2>List Your Vehicle</h2>
-<form action="https://script.google.com/macros/s/AKfycbyKe8iPs5hoPKY4nDueBpbGVdPSV6cPaNBtMlqQqPHuBaocNdqEEXhT9dwNNzqz6kPSZw/exec" method="POST">
-<input name="formType" type="hidden" value="listing"/>
-<input name="ownerName" placeholder="Your Name" required="" type="text"/>
-<input name="email" placeholder="Your Email" required="" type="email"/>
-<input name="phone" placeholder="Your Phone Number" required="" type="tel"/>
-<input name="vehicleType" placeholder="Vehicle Type (e.g., Camry, Prius, Yellow Cab)" type="text"/>
-<input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" type="text"/>
-<input name="rentalType" placeholder="Rental Type (e.g., Weekly, Monthly)" type="text"/>
-<input name="location" placeholder="Location (e.g., Bronx, Brooklyn)" type="text"/>
-<textarea name="additionalDetails" placeholder="Additional details about the vehicle (rental terms, availability, etc.)" required="" rows="4"></textarea>
-<div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
-<button type="submit">Submit Listing</button>
-<p style="text-align:center; margin-top: 20px;">
-<a href="https://docs.google.com/spreadsheets/d/11ryYhF0LFZmosoeD-hobUso50T44QwOLZWrqouMm7sA/edit?usp=sharing" style="color: #0074D9; font-weight: bold;" target="_blank">🔍 View Listings</a>
-</p>
-</form>
-</section>
-<section class="section" id="testimonials">
-<h2>What Our Users Say</h2>
-<div class="testimonial">
-<blockquote>“DriveLink NYC helped me find a TLC car within hours. Highly recommended!”</blockquote>
-<p>- Jamal A., Driver</p>
-</div>
-<div class="testimonial">
-<blockquote>“We filled three TLC rentals in one week after listing on DriveLink. Incredible exposure!”</blockquote>
-<p>- Sarah B., Dealership Manager</p>
-</div>
-<div class="testimonial">
-<blockquote>“Simple to use and effective. I always find drivers for our yellow cabs quickly.”</blockquote>
-<p>- Mike R., Garage Owner</p>
-</div>
-</section>
-<section class="section" id="contact">
-<h2>Get in Touch</h2>
-<form action="https://script.google.com/macros/s/AKfycbyKe8iPs5hoPKY4nDueBpbGVdPSV6cPaNBtMlqQqPHuBaocNdqEEXhT9dwNNzqz6kPSZw/exec" method="POST">
-<input name="formType" type="hidden" value="contact"/>
-<input name="name" placeholder="Your Name" required="" type="text">
-<input name="email" placeholder="Your Email" required="" type="email"/>
-<input name="phone" placeholder="Your Phone Number" required="" type="tel"/>
-<select name="role" required="">
-<option value="">I'm a...</option>
-<option value="Driver">Driver</option>
-<option value="Dealership">Dealership</option>
-<option value="Garage">Garage</option>
-<option value="Car Owner">Car Owner (Lease-to-Own or Rental)</option>
-</select>
-<textarea name="message" placeholder="Your Message" required="" rows="4"></textarea>
-<div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
-<button type="submit">Submit</button>
-</input></form>
-</section>
-<footer>
-<p>© 2025 DriveLink NYC. All rights reserved.</p>
-<p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
-<!-- Google Analytics or Plausible -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-XXXXXXXXX-X');
-</script>
-</footer>
-<script>
-  function showTab(id) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-  }
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const contactForm = document.getElementById("contactForm");
-
-    if (contactForm) {
-      contactForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const formData = new FormData(contactForm);
-
-        fetch("https://script.google.com/macros/s/AKfycbyKe8iPs5hoPKY4nDueBpbGVdPSV6cPaNBtMlqQqPHuBaocNdqEEXhT9dwNNzqz6kPSZw/exec", {
-          method: "POST",
-          body: formData
-        })
-        .then(response => {
-          if (response.ok) {
-            window.location.href = "https://drivelinknyc.com/thank-you.html";
-          } else {
-            alert("Error submitting form. Please try again.");
-          }
-        })
-        .catch(error => {
-          alert("Submission failed: " + error.message);
-        });
-      });
-    }
-  });
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('Service Worker registered:', reg))
-      .catch(err => console.error('Service Worker registration failed:', err));
-  }
-</script>
-
-
-
-<button id="installBtn" style="position: fixed; bottom: 20px; right: 20px; background: #0074D9; color: white; border: none; padding: 10px 20px; border-radius: 5px; display: none; z-index: 1000;">Install DriveLink NYC</button>
-<script>
-  let deferredPrompt;
-  const installBtn = document.getElementById('installBtn');
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'block';
-  });
-
-  installBtn.addEventListener('click', () => {
-    installBtn.style.display = 'none';
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt');
-      } else {
-        console.log('User dismissed the install prompt');
+    @media screen and (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: center;
       }
-      deferredPrompt = null;
+      .navbar a {
+        width: 100%;
+        text-align: center;
+        padding: 12px 0;
+      }
+      form {
+        margin: 20px 10px;
+        padding: 15px;
+      }
+      input, select, textarea {
+        font-size: 16px;
+      }
+      .hero h1 {
+        font-size: 24px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img alt="DriveLink NYC Logo" src="assets/images/logo-new.png"/>
+  </header>
+
+  <nav class="navbar">
+    <a href="#drivers" onclick="showTab('drivers')" class="active">For Drivers</a>
+    <a href="#dealerships" onclick="showTab('dealerships')">For Dealerships</a>
+    <a href="#garages" onclick="showTab('garages')">For Garages</a>
+    <a href="#contact">Contact</a>
+    <a href="#list-your-vehicle">List Your Vehicle</a>
+    <a href="view-listings.html">View Listings</a>
+  </nav>
+
+  <div class="hero">
+    <h1>Your Trusted TLC Rental Marketplace</h1>
+    <p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
+  </div>
+
+  <section class="section">
+    <div class="tab-content active" id="drivers">
+      <h2>For Drivers</h2>
+      <p>Find TLC-ready vehicles for rent, lease-to-own options, or yellow cabs in all boroughs.</p>
+    </div>
+    <div class="tab-content" id="dealerships">
+      <h2>For Dealerships</h2>
+      <p>List your TLC-licensed vehicles for free and connect directly with active drivers.</p>
+    </div>
+    <div class="tab-content" id="garages">
+      <h2>For Garages</h2>
+      <p>Post your yellow taxis for weekly or daily rentals.</p>
+    </div>
+  </section>
+
+  <section class="section" id="list-your-vehicle">
+    <h2>List Your Vehicle</h2>
+    <form id="listing-form">
+      <input name="formType" type="hidden" value="listing"/>
+      <input name="ownerName" placeholder="Your Name" required type="text"/>
+      <input name="email" placeholder="Your Email" required type="email"/>
+      <input name="phone" placeholder="Your Phone Number" required type="tel"/>
+      <input name="vehicleType" placeholder="Vehicle Type (e.g., Camry, Prius, Yellow Cab)" type="text"/>
+      <input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" type="text"/>
+      <input name="rentalType" placeholder="Rental Type (e.g., Weekly, Monthly)" type="text"/>
+      <input name="location" placeholder="Location (e.g., Bronx, Brooklyn)" type="text"/>
+      <input type="file" name="images" multiple accept="image/*" class="file-input">
+      <textarea name="additionalDetails" placeholder="Additional details" required rows="4"></textarea>
+      <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
+      <button type="submit">Submit Listing</button>
+    </form>
+  </section>
+
+  <section class="section" id="contact">
+    <h2>Get in Touch</h2>
+    <form id="contact-form">
+      <input name="formType" type="hidden" value="contact"/>
+      <input name="name" placeholder="Your Name" required type="text">
+      <input name="email" placeholder="Your Email" required type="email"/>
+      <input name="phone" placeholder="Your Phone Number" required type="tel"/>
+      <select name="role" required>
+        <option value="">I'm a...</option>
+        <option value="Driver">Driver</option>
+        <option value="Dealership">Dealership</option>
+        <option value="Garage">Garage</option>
+        <option value="Car Owner">Car Owner</option>
+      </select>
+      <textarea name="message" placeholder="Your Message" required rows="4"></textarea>
+      <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <section class="section" id="testimonials">
+    <h2>What Our Users Say</h2>
+    <div class="testimonial">
+      <blockquote>"DriveLink NYC helped me find a TLC car within hours. Highly recommended!"</blockquote>
+      <p>- Jamal A., Driver</p>
+    </div>
+    <div class="testimonial">
+      <blockquote>"We filled three TLC rentals in one week after listing on DriveLink."</blockquote>
+      <p>- Sarah B., Dealership Manager</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 DriveLink NYC. All rights reserved.</p>
+    <p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
+  </footer>
+
+  <script>
+    // Initialize Supabase
+    const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Tab functionality
+    function showTab(id) {
+      document.querySelectorAll('.tab-content').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+      
+      document.querySelectorAll('.navbar a').forEach(link => {
+        link.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+
+    // Form submissions
+    document.getElementById('listing-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const files = formData.getAll('images');
+
+      try {
+        const imageUrls = [];
+        for (const file of files) {
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${Math.random()}.${fileExt}`;
+          
+          const { data, error } = await supabase.storage
+            .from('vehicle-images')
+            .upload(`listings/${fileName}`, file);
+          
+          if (error) throw error;
+          imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/vehicle-images/listings/${fileName}`);
+        }
+
+        const { data, error } = await supabase.from('listings').insert({
+          owner_name: formData.get('ownerName'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          vehicle_type: formData.get('vehicleType'),
+          tlc_plate: formData.get('tlcPlate'),
+          rental_type: formData.get('rentalType'),
+          location: formData.get('location'),
+          additional_details: formData.get('additionalDetails'),
+          image_urls: imageUrls
+        });
+
+        if (error) throw error;
+        window.location.href = "thank-you.html";
+      } catch (error) {
+        console.error('Error:', error);
+        alert("Error submitting listing. Please try again.");
+      }
     });
-  });
-</script>
 
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
 
-<script>
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
+      try {
+        const { data, error } = await supabase.from('contacts').insert({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          role: formData.get('role'),
+          message: formData.get('message')
+        });
 
+        if (error) throw error;
+        window.location.href = "thank-you.html";
+      } catch (error) {
+        console.error('Error:', error);
+        alert("Error submitting contact form. Please try again.");
+      }
+    });
+
+    // PWA Installation
+    let deferredPrompt;
     const installBtn = document.createElement('button');
     installBtn.innerText = 'Install DriveLink NYC';
     installBtn.style.position = 'fixed';
@@ -351,23 +346,32 @@
     installBtn.style.border = 'none';
     installBtn.style.borderRadius = '5px';
     installBtn.style.cursor = 'pointer';
+    installBtn.style.display = 'none';
     document.body.appendChild(installBtn);
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+    });
 
     installBtn.addEventListener('click', () => {
       installBtn.style.display = 'none';
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => {
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted install');
+        }
         deferredPrompt = null;
       });
     });
-  });
 
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js');
-    });
-  }
-</script>
-
+    // Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
 </body>
 </html>

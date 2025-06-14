@@ -1,13 +1,20 @@
+const CACHE_NAME = 'drivelink-v2';
+const ASSETS = [
+  '/',
+  '/index.html',
+  '/assets/css/styles.css',
+  '/assets/js/main.js',
+  '/assets/images/logo-new.png'
+];
 
-self.addEventListener('install', function(event) {
-  console.log('[ServiceWorker] Install');
-  self.skipWaiting();
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(ASSETS))
 });
 
-self.addEventListener('activate', function(event) {
-  console.log('[ServiceWorker] Activate');
-});
-
-self.addEventListener('fetch', function(event) {
-  event.respondWith(fetch(event.request));
+self.addEventListener('fetch', (e) => {
+  e.respondWith(
+    caches.match(e.request)
+      .then(res => res || fetch(e.request))
 });
