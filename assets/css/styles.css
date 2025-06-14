@@ -1,0 +1,130 @@
+
+/* Base Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+header {
+  background-color: #000;
+  text-align: center;
+  padding: 20px 0;
+}
+
+header img {
+  max-width: 260px;
+  animation: fadeIn 0.8s ease-in;
+}
+
+.navbar {
+  background-color: #222;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.navbar a:hover, .navbar a.active {
+  background-color: #0074D9;
+  border-radius: 4px;
+}
+
+.hero {
+  background: linear-gradient(to right, #0074D9, #00c3ff);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.section {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+form {
+  background-color: white;
+  padding: 20px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #0074D9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+footer a {
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+  .navbar a {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+  }
+  form {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+  input, select, textarea {
+    font-size: 16px;
+  }
+  .hero h1 {
+    font-size: 24px;
+  }
+  .hero p {
+    font-size: 16px;
+  }
+}
