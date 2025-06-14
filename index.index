@@ -146,7 +146,7 @@
         const data = Object.fromEntries(formData.entries());
         fetch(scriptURL, {
           method: 'POST',
-          body: new FormData(form),
+          body: new FormData(form)
           
         })
         .then(response => {
