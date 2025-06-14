@@ -8,10 +8,11 @@
   <meta name="theme-color" content="#0074D9">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
+<!-- inline style removed -->
+<!-- <style>
 	/* Shared Styles */
 body {
   margin: 0;
@@ -173,7 +174,7 @@ footer a {
     font-size: 16px;
   }
 }
-</style>
+</style> -->
 
 </head>
 <body>
@@ -273,6 +274,7 @@ footer a {
       });
 
       if (error) throw error;
+      alert("Submission successful!");
       window.location.href = "thank-you.html";
     } catch (error) {
       console.error('Error:', error);

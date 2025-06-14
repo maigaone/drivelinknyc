@@ -12,7 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   
-  <style>
+  <!-- inline style removed -->
+<!-- <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -159,7 +160,7 @@
         font-size: 16px;
       }
     }
-  </style>
+  </style> -->
 </head>
 
 <body>
@@ -304,7 +305,8 @@
         });
 
         if (error) throw error;
-        window.location.href = "thank-you.html";
+        alert("Submission successful!");
+      window.location.href = "thank-you.html";
       } catch (error) {
         console.error('Error:', error);
         alert("Error submitting listing. Please try again.");
@@ -326,7 +328,8 @@
         });
 
         if (error) throw error;
-        window.location.href = "thank-you.html";
+        alert("Submission successful!");
+      window.location.href = "thank-you.html";
       } catch (error) {
         console.error('Error:', error);
         alert("Error submitting contact form. Please try again.");
