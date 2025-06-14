@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DriveLink NYC - For Dealerships</title>
+  <title>DriveLink NYC - For Garages</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0074D9">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -203,19 +203,19 @@ footer a {
 </div>
 
 <section class="section">
-  <h2>Benefits for Dealerships</h2>
+  <h2>Benefits for Garages</h2>
   <div class="features">
     <div class="feature-card">
       <h3>Increased Visibility</h3>
-      <p>List your inventory to a targeted audience of drivers.</p>
+      <p>Connect with drivers needing maintenance and TLC inspections.</p>
     </div>
     <div class="feature-card">
       <h3>Streamlined Process</h3>
-      <p>Manage rentals and lease-to-own agreements in one place.</p>
+      <p>Offer fast, reliable repair and maintenance services.</p>
     </div>
     <div class="feature-card">
       <h3>Trusted Platform</h3>
-      <p>Verified drivers and secure transactions.</p>
+      <p>Trusted by drivers across NYC.</p>
     </div>
   </div>
 </section>
@@ -223,20 +223,20 @@ footer a {
 <section class="section">
   <h2>Partner Testimonials</h2>
   <div class="testimonial">
-    <blockquote>"Our rental bookings increased by 40% after joining DriveLink."</blockquote>
-    <p>- Luxury Auto Group</p>
+    <blockquote>"Our garage saw a 50% increase in bookings after joining DriveLink."</blockquote>
+    <p>- NYC Garage Hub</p>
   </div>
 </section>
 
 <section class="section" id="contact">
   <h2>Join Our Network</h2>
-  <form id="dealership-form">
-    <input type="hidden" name="formType" value="dealership_signup">
-    <input type="text" name="name" placeholder="Dealership Name" required>
-    <input type="email" name="email" placeholder="Contact Email" required>
-    <input type="tel" name="phone" placeholder="Contact Phone" required pattern="[0-9]{10}">
-    <input type="text" name="location" placeholder="Dealership Location" required>
-    <textarea name="message" placeholder="Tell us about your inventory" rows="4" required></textarea>
+  <form id="garage-form">
+    <input type="hidden" name="formType" value="garage_signup">
+    <input type="text" name="name" placeholder="Garage Name" required>
+    <input type="email" name="email" placeholder="Garage Email" required>
+    <input type="tel" name="phone" placeholder="Garage Phone" required pattern="[0-9]{10}">
+    <input type="text" name="location" placeholder="Garage Location" required>
+    <textarea name="message" placeholder="Tell us about your services" rows="4" required></textarea>
     <button type="submit" id="submit-btn">Submit</button>
     <div id="loading" style="display:none;">Submitting...</div>
   </form>
@@ -254,7 +254,7 @@ footer a {
   const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   // Form submission
-  document.getElementById('dealership-form').addEventListener('submit', async (e) => {
+  document.getElementById('garage-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const submitBtn = document.getElementById('submit-btn');
     const loading = document.getElementById('loading');
@@ -264,7 +264,7 @@ footer a {
 
     try {
       const formData = new FormData(e.target);
-      const { data, error } = await supabase.from('dealership_signups').insert({
+      const { data, error } = await supabase.from('garage_signups').insert({
         name: formData.get('name'),
         email: formData.get('email'),
         phone: formData.get('phone'),
