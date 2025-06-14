@@ -1,4 +1,6 @@
 /* Base Styles */
+
+<styles>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -127,3 +129,4 @@ footer a {
     font-size: 16px;
   }
 }
+</styles>
