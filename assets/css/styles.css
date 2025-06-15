@@ -111,6 +111,67 @@ header img {
   margin-top: 0;
 }
 
+.shift-select option.selected {
+    background: #F5C400;
+    color: #000;
+  }
+
+  @media (max-width: 768px) {
+    .floating-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #F5C400;
+      padding: 12px 20px;
+      border-radius: 50px;
+      z-index: 100;
+    }
+  }
+
+/* Verification Badges */
+.verified-badge {
+  background: #F5C400;
+  color: #000;
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+/* Form Feedback */
+.form-feedback {
+  margin-top: 15px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 4px;
+}
+.form-feedback.success {
+  background: #d4edda;
+  color: #155724;
+}
+.form-feedback.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Mobile Menu */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    display: none;
+  }
+  .navbar.mobile-visible {
+    display: flex;
+  }
+  .menu-toggle {
+    display: block;
+    padding: 15px;
+    background: #0074D9;
+    color: white;
+  }
+}
+
 /* ====================== */
 /* Yellow Garage Specific */
 /* ====================== */
@@ -165,6 +226,61 @@ header img {
   display: inline-block;
   width: 1em;
   margin-left: -1em;
+}
+
+/* Verification Badges */
+.verified-badge {
+  background: #F5C400;
+  color: #000;
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+/* Form Feedback */
+.form-feedback {
+  margin-top: 15px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 4px;
+}
+.form-feedback.success {
+  background: #d4edda;
+  color: #155724;
+}
+.form-feedback.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+  @media (max-width: 768px) {
+    .services-select {
+      height: auto;
+      padding: 10px;
+    }
+    .services-select option {
+      padding: 8px;
+      margin: 4px 0;
+    }
+  }
+
+/* Mobile Menu */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    display: none;
+  }
+  .navbar.mobile-visible {
+    display: flex;
+  }
+  .menu-toggle {
+    display: block;
+    padding: 15px;
+    background: #0074D9;
+    color: white;
+  }
 }
 
 /* Yellow specific hero */
