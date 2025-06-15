@@ -3,23 +3,15 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DriveLink NYC</title>
+  <title>DriveLink NYC - Home</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0074D9">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
- <link rel="icon" type="image/png" href="assets/images/favicon.png"> 
- <link rel="stylesheet" href="assets/css/styles.css">
-  
-  <!-- inline style removed -->
-
-
-
-
 </head>
 
 <body>
@@ -28,11 +20,11 @@
   </header>
 
   <nav class="navbar">
-    <a href="#drivers" onclick="showTab('drivers')" class="active">For Drivers</a>
-    <a href="#dealerships" onclick="showTab('dealerships')">For Dealerships</a>
-    <a href="#garages" onclick="showTab('garages')">For Garages</a>
+    <a href="index.html" class="active">Home</a>
+    <a href="drivers.html">For Drivers</a>
+    <a href="dealerships.html">For Dealerships</a>
+    <a href="garages.html">For Garages</a>
     <a href="#contact">Contact</a>
-    <a href="#list-your-vehicle">List Your Vehicle</a>
     <a href="view-listings.html">View Listings</a>
   </nav>
 
@@ -42,17 +34,23 @@
   </div>
 
   <section class="section">
-    <div class="tab-content active" id="drivers">
-      <h2>For Drivers</h2>
-      <p>Find TLC-ready vehicles for rent, lease-to-own options, or yellow cabs in all boroughs.</p>
-    </div>
-    <div class="tab-content" id="dealerships">
-      <h2>For Dealerships</h2>
-      <p>List your TLC-licensed vehicles for free and connect directly with active drivers.</p>
-    </div>
-    <div class="tab-content" id="garages">
-      <h2>For Garages</h2>
-      <p>Post your yellow taxis for weekly or daily rentals.</p>
+    <h2>Our Services</h2>
+    <div class="features">
+      <div class="feature-card">
+        <h3>For Drivers</h3>
+        <p>Find TLC-ready vehicles for rent or lease-to-own options.</p>
+        <a href="drivers.html" class="btn">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <h3>For Dealerships</h3>
+        <p>List your TLC-licensed vehicles and connect with drivers.</p>
+        <a href="dealerships.html" class="btn">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <h3>For Garages</h3>
+        <p>Offer maintenance services to our network of vehicles.</p>
+        <a href="garages.html" class="btn">Learn More</a>
+      </div>
     </div>
   </section>
 
@@ -62,15 +60,16 @@
       <input name="formType" type="hidden" value="listing"/>
       <input name="ownerName" placeholder="Your Name" required type="text"/>
       <input name="email" placeholder="Your Email" required type="email"/>
-      <input name="phone" placeholder="Your Phone Number" required type="tel"/>
-      <input name="vehicleType" placeholder="Vehicle Type (e.g., Camry, Prius, Yellow Cab)" type="text"/>
-      <input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" type="text"/>
-      <input name="rentalType" placeholder="Rental Type (e.g., Weekly, Monthly)" type="text"/>
-      <input name="location" placeholder="Location (e.g., Bronx, Brooklyn)" type="text"/>
-      <input type="file" name="images" multiple accept="image/*" class="file-input">
+      <input name="phone" placeholder="Your Phone Number" required type="tel" pattern="[0-9]{10}"/>
+      <input name="vehicleType" placeholder="Vehicle Type (e.g., Camry, Prius)" required type="text"/>
+      <input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" required type="text"/>
+      <input name="rentalType" placeholder="Rental Type (e.g., Weekly, Monthly)" required type="text"/>
+      <input name="location" placeholder="Location (e.g., Bronx, Brooklyn)" required type="text"/>
+      <input type="file" name="images" multiple accept="image/*" class="file-input" required>
       <textarea name="additionalDetails" placeholder="Additional details" required rows="4"></textarea>
       <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
-      <button type="submit">Submit Listing</button>
+      <button type="submit" id="submit-listing">Submit Listing</button>
+      <div id="loading-listing" class="loading">Submitting...</div>
     </form>
   </section>
 
@@ -80,7 +79,7 @@
       <input name="formType" type="hidden" value="contact"/>
       <input name="name" placeholder="Your Name" required type="text">
       <input name="email" placeholder="Your Email" required type="email"/>
-      <input name="phone" placeholder="Your Phone Number" required type="tel"/>
+      <input name="phone" placeholder="Your Phone Number" required type="tel" pattern="[0-9]{10}"/>
       <select name="role" required>
         <option value="">I'm a...</option>
         <option value="Driver">Driver</option>
@@ -90,7 +89,8 @@
       </select>
       <textarea name="message" placeholder="Your Message" required rows="4"></textarea>
       <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
-      <button type="submit">Submit</button>
+      <button type="submit" id="submit-contact">Submit</button>
+      <div id="loading-contact" class="loading">Submitting...</div>
     </form>
   </section>
 
@@ -117,28 +117,21 @@
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Tab functionality
-    function showTab(id) {
-      document.querySelectorAll('.tab-content').forEach(el => {
-        el.classList.remove('active');
-      });
-      document.getElementById(id).classList.add('active');
-      
-      document.querySelectorAll('.navbar a').forEach(link => {
-        link.classList.remove('active');
-      });
-      event.target.classList.add('active');
-    }
-
     // Form submissions
     document.getElementById('listing-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-      const files = formData.getAll('images');
+      const submitBtn = document.getElementById('submit-listing');
+      const loading = document.getElementById('loading-listing');
+      
+      submitBtn.disabled = true;
+      loading.style.display = 'block';
 
       try {
+        const form = e.target;
+        const formData = new FormData(form);
+        const files = formData.getAll('images');
         const imageUrls = [];
+
         for (const file of files) {
           const fileExt = file.name.split('.').pop();
           const fileName = `${Math.random()}.${fileExt}`;
@@ -168,15 +161,24 @@
       } catch (error) {
         console.error('Error:', error);
         alert("Error submitting listing. Please try again.");
+      } finally {
+        submitBtn.disabled = false;
+        loading.style.display = 'none';
       }
     });
 
     document.getElementById('contact-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
+      const submitBtn = document.getElementById('submit-contact');
+      const loading = document.getElementById('loading-contact');
+      
+      submitBtn.disabled = true;
+      loading.style.display = 'block';
 
       try {
+        const form = e.target;
+        const formData = new FormData(form);
+
         const { data, error } = await supabase.from('contacts').insert({
           name: formData.get('name'),
           email: formData.get('email'),
@@ -190,24 +192,19 @@
       } catch (error) {
         console.error('Error:', error);
         alert("Error submitting contact form. Please try again.");
+      } finally {
+        submitBtn.disabled = false;
+        loading.style.display = 'none';
       }
     });
 
     // PWA Installation
     let deferredPrompt;
     const installBtn = document.createElement('button');
-    installBtn.innerText = 'Install DriveLink NYC';
-    installBtn.style.position = 'fixed';
-    installBtn.style.bottom = '20px';
-    installBtn.style.right = '20px';
-    installBtn.style.padding = '10px 15px';
-    installBtn.style.backgroundColor = '#0074D9';
-    installBtn.style.color = '#fff';
-    installBtn.style.border = 'none';
-    installBtn.style.borderRadius = '5px';
-    installBtn.style.cursor = 'pointer';
-    installBtn.style.display = 'none';
+    installBtn.className = 'install-btn';
+    installBtn.textContent = 'Install App';
     document.body.appendChild(installBtn);
+    installBtn.style.display = 'none';
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();

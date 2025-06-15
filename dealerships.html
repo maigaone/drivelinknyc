@@ -8,14 +8,9 @@
   <meta name="theme-color" content="#0074D9">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
- <link rel="icon" type="image/png" href="assets/images/favicon.png"> 
- <link rel="stylesheet" href="assets/css/styles.css">
-
-<!-- inline style removed -->
-
 </head>
 <body>
 
@@ -29,6 +24,7 @@
   <a href="dealerships.html" class="active">For Dealerships</a>
   <a href="garages.html">For Garages</a>
   <a href="#contact">Contact</a>
+  <a href="view-listings.html">View Listings</a>
 </nav>
 
 <div class="hero">
@@ -41,15 +37,36 @@
   <div class="features">
     <div class="feature-card">
       <h3>Increased Visibility</h3>
-      <p>List your inventory to a targeted audience of drivers.</p>
+      <p>List your inventory to a targeted audience of active drivers.</p>
     </div>
     <div class="feature-card">
-      <h3>Streamlined Process</h3>
-      <p>Manage rentals and lease-to-own agreements in one place.</p>
+      <h3>Streamlined Management</h3>
+      <p>Track rentals and payments in one dashboard.</p>
     </div>
     <div class="feature-card">
-      <h3>Trusted Platform</h3>
-      <p>Verified drivers and secure transactions.</p>
+      <h3>Verified Drivers</h3>
+      <p>All drivers are TLC-licensed with background checks.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>How It Works</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="step-number">1</span>
+      <h3>List Your Vehicles</h3>
+      <p>Upload details and photos of your available TLC vehicles.</p>
+    </div>
+    <div class="step">
+      <span class="step-number">2</span>
+      <h3>Receive Inquiries</h3>
+      <p>Drivers contact you directly through our platform.</p>
+    </div>
+    <div class="step">
+      <span class="step-number">3</span>
+      <h3>Complete Rental</h3>
+      <p>Finalize agreements and start earning.</p>
     </div>
   </div>
 </section>
@@ -60,19 +77,24 @@
     <blockquote>"Our rental bookings increased by 40% after joining DriveLink."</blockquote>
     <p>- Luxury Auto Group</p>
   </div>
+  <div class="testimonial">
+    <blockquote>"The platform handles all the marketing - we just focus on the vehicles."</blockquote>
+    <p>- Empire City Motors</p>
+  </div>
 </section>
 
 <section class="section" id="contact">
   <h2>Join Our Network</h2>
   <form id="dealership-form">
     <input type="hidden" name="formType" value="dealership_signup">
-    <input type="text" name="name" placeholder="Dealership Name" required>
+    <input type="text" name="business_name" placeholder="Dealership Name" required>
     <input type="email" name="email" placeholder="Contact Email" required>
     <input type="tel" name="phone" placeholder="Contact Phone" required pattern="[0-9]{10}">
-    <input type="text" name="location" placeholder="Dealership Location" required>
-    <textarea name="message" placeholder="Tell us about your inventory" rows="4" required></textarea>
-    <button type="submit" id="submit-btn">Submit</button>
-    <div id="loading" style="display:none;">Submitting...</div>
+    <input type="text" name="address" placeholder="Business Address" required>
+    <input type="number" name="inventory_size" placeholder="Number of TLC Vehicles" required>
+    <textarea name="message" placeholder="Tell us about your dealership" rows="4" required></textarea>
+    <button type="submit" id="submit-btn">Submit Application</button>
+    <div id="loading" class="loading">Submitting...</div>
   </form>
 </section>
 
@@ -99,10 +121,11 @@
     try {
       const formData = new FormData(e.target);
       const { data, error } = await supabase.from('dealership_signups').insert({
-        name: formData.get('name'),
+        business_name: formData.get('business_name'),
         email: formData.get('email'),
         phone: formData.get('phone'),
-        location: formData.get('location'),
+        address: formData.get('address'),
+        inventory_size: formData.get('inventory_size'),
         message: formData.get('message'),
         created_at: new Date().toISOString()
       });

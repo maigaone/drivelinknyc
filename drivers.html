@@ -8,13 +8,9 @@
   <meta name="theme-color" content="#0074D9">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
- <link rel="icon" type="image/png" href="assets/images/favicon.png"> 
- <link rel="stylesheet" href="assets/css/styles.css">
-
-
 </head>
 <body>
 
@@ -28,6 +24,7 @@
   <a href="dealerships.html">For Dealerships</a>
   <a href="garages.html">For Garages</a>
   <a href="#contact">Contact</a>
+  <a href="view-listings.html">View Listings</a>
 </nav>
 
 <div class="hero">
@@ -40,11 +37,11 @@
   <div class="features">
     <div class="feature-card">
       <h3>Wide Selection</h3>
-      <p>Choose from hundreds of TLC-approved vehicles.</p>
+      <p>Choose from hundreds of TLC-approved vehicles across NYC.</p>
     </div>
     <div class="feature-card">
-      <h3>Lease-to-Own</h3>
-      <p>Flexible plans to own your vehicle over time.</p>
+      <h3>Transparent Pricing</h3>
+      <p>No hidden fees or surprise charges.</p>
     </div>
     <div class="feature-card">
       <h3>Trusted Partners</h3>
@@ -54,10 +51,21 @@
 </section>
 
 <section class="section">
+  <h2>Available Vehicles</h2>
+  <div class="vehicle-grid" id="vehicle-listings">
+    <!-- Will be populated by JavaScript -->
+  </div>
+</section>
+
+<section class="section">
   <h2>Driver Testimonials</h2>
   <div class="testimonial">
     <blockquote>"DriveLink helped me find a rental with no hidden fees. Saved me $200/month!"</blockquote>
     <p>- Carlos M., Uber Driver</p>
+  </div>
+  <div class="testimonial">
+    <blockquote>"The lease-to-own option let me become a car owner in just 18 months."</blockquote>
+    <p>- Lisa T., Lyft Driver</p>
   </div>
 </section>
 
@@ -73,10 +81,11 @@
       <option value="Sedan">Sedan</option>
       <option value="SUV">SUV</option>
       <option value="Hybrid/Electric">Hybrid/Electric</option>
+      <option value="Wheelchair Accessible">Wheelchair Accessible</option>
     </select>
     <textarea name="message" placeholder="Tell us about your driving needs" rows="4" required></textarea>
     <button type="submit" id="submit-btn">Submit</button>
-    <div id="loading" style="display:none;">Submitting...</div>
+    <div id="loading" class="loading">Submitting...</div>
   </form>
 </section>
 
@@ -91,10 +100,40 @@
   const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
   const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+  // Load vehicle listings
+  async function loadListings() {
+    try {
+      const { data, error } = await supabase
+        .from('listings')
+        .select('*')
+        .eq('status', 'available')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      
+      const container = document.getElementById('vehicle-listings');
+      container.innerHTML = '';
+      
+      data.forEach(vehicle => {
+        const vehicleCard = document.createElement('div');
+        vehicleCard.className = 'vehicle-card';
+        vehicleCard.innerHTML = `
+          <img src="${vehicle.image_urls[0]}" alt="${vehicle.vehicle_type}">
+          <h3>${vehicle.vehicle_type}</h3>
+          <p>${vehicle.rental_type} Rental • ${vehicle.location}</p>
+          <p class="price">$${vehicle.price}/week</p>
+          <button class="btn" onclick="inquireAboutVehicle('${vehicle.id}')">Inquire Now</button>
+        `;
+        container.appendChild(vehicleCard);
+      });
+    } catch (error) {
+      console.error('Error loading listings:', error);
+    }
+  }
+
   // Form submission
   document.getElementById('driver-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const form = e.target;
     const submitBtn = document.getElementById('submit-btn');
     const loading = document.getElementById('loading');
     
@@ -102,7 +141,7 @@
     loading.style.display = 'block';
 
     try {
-      const formData = new FormData(form);
+      const formData = new FormData(e.target);
       const { data, error } = await supabase.from('driver_inquiries').insert({
         name: formData.get('name'),
         email: formData.get('email'),
@@ -154,6 +193,9 @@
       navigator.serviceWorker.register('/service-worker.js');
     });
   }
+
+  // Load listings when page loads
+  document.addEventListener('DOMContentLoaded', loadListings);
 </script>
 </body>
 </html>
