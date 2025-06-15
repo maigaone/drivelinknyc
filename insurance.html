@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TLC Insurance Brokers | Yellow Garage</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Find TLC-approved insurance brokers or list your services. Get quotes tailored for taxi drivers.">
+</head>
+<body>
+  <!-- Header (Same as index.html) -->
+  <header>
+    <img src="images/logo-yellow-garage.png" alt="Yellow Garage Logo">
+  </header>
+
+  <!-- Navigation -->
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="drivers.html">For Drivers</a>
+    <a href="garages.html">For Garages</a>
+    <a href="insurance.html" class="active">Insurance Brokers</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero yellow-hero">
+    <h1>TLC Insurance Solutions</h1>
+    <p>Connect with trusted brokers or list your services. Get coverage that fits your needs.</p>
+  </section>
+
+  <!-- Insurance Brokers Grid -->
+  <section class="section">
+    <h2>Featured Brokers</h2>
+    <p>Browse TLC-approved insurance providers:</p>
+    
+    <div class="insurance-grid">
+      <!-- Broker 1 -->
+      <div class="insurance-card">
+        <h3>Metro Plus Insurance</h3>
+        <p><strong>Specialty:</strong> Affordable plans for new drivers</p>
+        <p><strong>Coverage:</strong> Liability, Collision, Injury</p>
+        <p><strong>Contact:</strong> (555) 123-4567</p>
+        <a href="tel:+15551234567" class="contact-btn">Call Now</a>
+      </div>
+
+      <!-- Broker 2 -->
+      <div class="insurance-card">
+        <h3>Yellow Shield Brokers</h3>
+        <p><strong>Specialty:</strong> Discounts for Yellow Garage drivers</p>
+        <p><strong>Coverage:</strong> Full TLC compliance packages</p>
+        <p><strong>Contact:</strong> info@yellowshield.com</p>
+        <a href="mailto:info@yellowshield.com" class="contact-btn">Email Us</a>
+      </div>
+
+      <!-- Broker 3 -->
+      <div class="insurance-card">
+        <h3>Citywide TLC Insurance</h3>
+        <p><strong>Specialty:</strong> High-risk driver solutions</p>
+        <p><strong>Coverage:</strong> Commercial + Rental</p>
+        <p><strong>Contact:</strong> (555) 987-6543</p>
+        <a href="tel:+15559876543" class="contact-btn">Call Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insurance Form Section -->
+  <section class="section">
+    <div class="insurance-form">
+      <h2>Get a Quote or List Your Services</h2>
+      
+      <!-- Toggle Buttons -->
+      <div style="text-align: center; margin-bottom: 20px;">
+        <button id="driver-btn" class="btn" style="background-color: #F5C400;">I'm a Driver</button>
+        <button id="broker-btn" class="btn" style="background-color: #0074D9;">I'm a Broker</button>
+      </div>
+
+      <!-- Driver Form (Default) -->
+      <form id="driver-form">
+        <label for="driver-name">Full Name*</label>
+        <input type="text" id="driver-name" required>
+
+        <label for="driver-phone">Phone*</label>
+        <input type="tel" id="driver-phone" required>
+
+        <label for="driver-email">Email</label>
+        <input type="email" id="driver-email">
+
+        <label for="driver-needs">Describe Your Needs*</label>
+        <textarea id="driver-needs" placeholder="e.g., 'Need liability coverage for a 2023 Toyota Camry'" required></textarea>
+
+        <button type="submit" class="btn">Request Quotes</button>
+      </form>
+
+      <!-- Broker Form (Hidden) -->
+      <form id="broker-form" style="display: none;">
+        <label for="broker-company">Company Name*</label>
+        <input type="text" id="broker-company" required>
+
+        <label for="broker-license">TLC License Number*</label>
+        <input type="text" id="broker-license" required>
+
+        <label for="broker-contact">Contact Person*</label>
+        <input type="text" id="broker-contact" required>
+
+        <label for="broker-offerings">Services Offered*</label>
+        <textarea id="broker-offerings" placeholder="e.g., 'Discounts for fleet owners, no down payment plans'" required></textarea>
+
+        <button type="submit" class="btn">List My Services</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section">
+    <h2>Driver Experiences</h2>
+    <div class="testimonial">
+      <blockquote>"Yellow Shield saved me 30% on my TLC insurance. Highly recommend!"</blockquote>
+      <p>— Carlos M., NYC Driver</p>
+    </div>
+  </section>
+
+  <!-- Footer (Same as index.html) -->
+  <footer>
+    <p>&copy; 2023 Yellow Garage. All rights reserved.</p>
+    <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+  </footer>
+
+  <!-- Script to Toggle Forms -->
+  <script>
+    document.getElementById('driver-btn').addEventListener('click', function() {
+      document.getElementById('driver-form').style.display = 'block';
+      document.getElementById('broker-form').style.display = 'none';
+      this.style.backgroundColor = '#F5C400';
+      document.getElementById('broker-btn').style.backgroundColor = '#0074D9';
+    });
+
+    document.getElementById('broker-btn').addEventListener('click', function() {
+      document.getElementById('broker-form').style.display = 'block';
+      document.getElementById('driver-form').style.display = 'none';
+      this.style.backgroundColor = '#F5C400';
+      document.getElementById('driver-btn').style.backgroundColor = '#0074D9';
+    });
+  </script>
+</body>
+</html>
