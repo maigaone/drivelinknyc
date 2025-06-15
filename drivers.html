@@ -19,12 +19,16 @@
 </header>
 
 <nav class="navbar">
-  <a href="index.html">Home</a>
-  <a href="drivers.html" class="active">For Drivers</a>
-  <a href="dealerships.html">For Dealerships</a>
-  <a href="garages.html">For Garages</a>
-  <a href="#contact">Contact</a>
-  <a href="view-listings.html">View Listings</a>
+  <button class="menu-toggle">☰ Menu</button>
+  <div class="navbar mobile-hidden">
+    <a href="index.html">Home</a>
+    <a href="drivers.html" class="active">For Drivers</a>
+    <a href="dealerships.html">For Dealerships</a>
+    <a href="garages.html">For Garages</a>
+    <a href="sell-vehicle.html">Sell Vehicle</a>
+    <a href="#contact">Contact</a>
+    <a href="view-listings.html">View Listings</a>
+  </div>
 </nav>
 
 <div class="hero">
@@ -197,5 +201,33 @@
   // Load listings when page loads
   document.addEventListener('DOMContentLoaded', loadListings);
 </script>
+
+
+<script>
+  // Lazy load implementation
+  document.addEventListener('DOMContentLoaded', () => {
+    const lazyImages = [].slice.call(document.querySelectorAll('img[data-src]'));
+    if ('IntersectionObserver' in window) {
+      let lazyImageObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            let lazyImage = entry.target;
+            lazyImage.src = lazyImage.dataset.src;
+            lazyImageObserver.unobserve(lazyImage);
+          }
+        });
+      });
+      lazyImages.forEach((lazyImage) => lazyImageObserver.observe(lazyImage));
+    }
+  });
+</script>
+
+<script>
+  document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('.navbar').classList.toggle('mobile-visible');
+  });
+</script>
+
+
 </body>
 </html>

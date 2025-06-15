@@ -19,17 +19,19 @@
     <img alt="DriveLink NYC Logo" src="assets/images/logo-new.png"/>
   </header>
 
-  <nav class="navbar">
-    <a href="index.html" class="active">Home</a>
-    <a href="drivers.html">For Drivers</a>
-    <a href="dealerships.html">For Dealerships</a>
-    <a href="garages.html">For Garages</a>
-    <a href="yellow-garages.html">For Yellow Taxi Garages</a>
-    <a href="#contact">Contact</a>
-    <a href="view-listings.html">View Listings</a>
-    <a href="index.html">Home</a>
-    <a href="insurance.html" class="active">Insurance Brokers</a>
- </nav>
+<nav class="navbar">
+ <button class="menu-toggle">☰ Menu</button>
+<nav class="navbar mobile-hidden">
+  <a href="index.html" class="active">Home</a>
+  <a href="drivers.html">For Drivers</a>
+  <a href="dealerships.html">For Dealerships</a>
+  <a href="garages.html">For Garages</a>
+  <a href="yellow-garages.html">Yellow Taxi Garages</a>
+  <a href="sell-vehicle.html">Sell Vehicle</a>
+  <a href="insurance.html">Insurance</a>
+  <a href="view-listings.html">Listings</a>
+  <a href="#contact">Contact</a>
+</nav>
 
   <div class="hero">
     <h1>Your Trusted TLC Rental Marketplace</h1>
@@ -233,5 +235,25 @@
       });
     }
   </script>
+
+  
+<!-- Added to form submission script -->
+<script>
+  // Initialize Supabase (recommend using env vars)
+  const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
+  
+  // Form submission feedback
+  const feedback = document.createElement('div');
+  feedback.className = 'form-feedback';
+  document.getElementById('listing-form').appendChild(feedback);
+</script>
+
+<script>
+  document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('.navbar').classList.toggle('mobile-visible');
+  });
+</script>
+
 </body>
 </html>

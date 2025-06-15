@@ -19,12 +19,16 @@
 </header>
 
 <nav class="navbar">
-  <a href="index.html">Home</a>
-  <a href="drivers.html">For Drivers</a>
-  <a href="dealerships.html">For Dealerships</a>
-  <a href="garages.html" class="active">For Garages</a>
-  <a href="#contact">Contact</a>
-  <a href="view-listings.html">View Listings</a>
+  <button class="menu-toggle">☰ Menu</button>
+  <div class="navbar mobile-hidden">  
+    <a href="index.html">Home</a>
+    <a href="drivers.html">For Drivers</a>
+    <a href="dealerships.html">For Dealerships</a>
+    <a href="garages.html" class="active">For Garages</a>
+    <a href="sell-vehicle.html">Sell Vehicle</a>
+    <a href="#contact">Contact</a>
+    <a href="view-listings.html">View Listings</a>
+  </div>
 </nav>
 
 <div class="hero">
@@ -131,6 +135,12 @@
   });
 
   // PWA and Service Worker code same as drivers.html
+</script>
+
+<script>
+  document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('.navbar').classList.toggle('mobile-visible');
+  });
 </script>
 </body>
 </html>

@@ -15,6 +15,8 @@
 
   <!-- Navigation -->
   <div class="navbar">
+<button class="menu-toggle">☰ Menu</button>
+<nav class="navbar mobile-hidden">
     <a href="index.html">Home</a>
     <a href="drivers.html">For Drivers</a>
     <a href="garages.html">For Garages</a>
@@ -44,12 +46,14 @@
 
       <!-- Broker 2 -->
       <div class="insurance-card">
+       <h3>Metro Plus Insurance <span class="verified-badge">Verified</span></h3>
         <h3>Yellow Shield Brokers</h3>
         <p><strong>Specialty:</strong> Discounts for Yellow Garage drivers</p>
         <p><strong>Coverage:</strong> Full TLC compliance packages</p>
         <p><strong>Contact:</strong> info@yellowshield.com</p>
         <a href="mailto:info@yellowshield.com" class="contact-btn">Email Us</a>
       </div>
+      <button class="floating-cta">Get Insurance Quote</button>	
 
       <!-- Broker 3 -->
       <div class="insurance-card">
@@ -140,5 +144,11 @@
       document.getElementById('driver-btn').style.backgroundColor = '#0074D9';
     });
   </script>
+
+<script>
+  document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('.navbar').classList.toggle('mobile-visible');
+  });
+</script>
 </body>
 </html>

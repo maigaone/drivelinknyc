@@ -19,17 +19,26 @@
 </header>
 
 <nav class="navbar">
-  <a href="index.html">Home</a>
-  <a href="drivers.html">For Drivers</a>
-  <a href="dealerships.html" class="active">For Dealerships</a>
-  <a href="garages.html">For Garages</a>
-  <a href="#contact">Contact</a>
-  <a href="view-listings.html">View Listings</a>
+  <button class="menu-toggle">☰ Menu</button>
+  <div class="navbar mobile-hidden">
+    <a href="index.html">Home</a>
+    <a href="drivers.html">For Drivers</a>
+    <a href="dealerships.html" class="active">For Dealerships</a>
+    <a href="garages.html">For Garages</a>
+    <a href="sell-vehicle.html">Sell Vehicle</a>
+    <a href="#contact">Contact</a>
+    <a href="view-listings.html">View Listings</a>
+  </div>
 </nav>
 
 <div class="hero">
   <h1>Grow Your TLC Rental Business</h1>
   <p>Connect with thousands of NYC drivers looking for vehicles.</p>
+</div>
+
+<div class="feature-card">
+  <h3>TLC Specialists <span class="verified-badge">Certified</span></h3>
+  <p>Work with vehicles that meet NYC standards.</p>
 </div>
 
 <section class="section">
@@ -85,7 +94,15 @@
 
 <section class="section" id="contact">
   <h2>Join Our Network</h2>
+  <div class="file-upload-container">
+    <input type="file" id="inventory-csv" accept=".csv" style="display: none;">
+    <button id="upload-btn" class="btn secondary">Bulk Upload Inventory</button>
+    <span id="csv-filename">No file selected</span>
+  </div>
   <form id="dealership-form">
+    <select name="services" multiple required class="services-select">
+  <!-- options -->
+</select>	
     <input type="hidden" name="formType" value="dealership_signup">
     <input type="text" name="business_name" placeholder="Dealership Name" required>
     <input type="email" name="email" placeholder="Contact Email" required>
@@ -143,5 +160,24 @@
 
   // PWA and Service Worker code same as drivers.html
 </script>
+
+
+<script>
+  // CSV upload handler
+  document.getElementById('upload-btn').addEventListener('click', () => {
+    document.getElementById('inventory-csv').click();
+  });
+  
+  document.getElementById('inventory-csv').addEventListener('change', (e) => {
+    document.getElementById('csv-filename').textContent = e.target.files[0]?.name || 'No file selected';
+  });
+</script>
+
+<script>
+  document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('.navbar').classList.toggle('mobile-visible');
+  });
+</script>
+
 </body>
 </html>

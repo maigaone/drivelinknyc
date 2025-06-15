@@ -19,11 +19,14 @@
 </header>
 
 <nav class="navbar">
+  <button class="menu-toggle">☰ Menu</button>
+<nav class="navbar mobile-hidden">
   <a href="index.html">Home</a>
   <a href="drivers.html">For Drivers</a>
   <a href="dealerships.html">For Dealerships</a>
   <a href="garages.html">For Garages</a>
   <a href="yellow-garages.html" class="active">For Yellow Taxi Garages</a>
+  <a href="sell-vehicle.html">Sell Vehicle</a>
   <a href="#contact">Contact</a>
   <a href="view-listings.html">View Listings</a>
 </nav>
@@ -94,6 +97,7 @@
     <input type="tel" name="phone" placeholder="Contact Phone" required pattern="[0-9]{10}">
     <input type="number" name="cab_count" placeholder="Number of Yellow Cabs Available" required min="1">
     <select name="shift_times" multiple required>
+       <select name="shift_times" multiple required class="shift-select">
       <option value="Day Shift (7am-7pm)">Day Shift (7am-7pm)</option>
       <option value="Night Shift (7pm-7am)">Night Shift (7pm-7am)</option>
       <option value="24-Hour Rental">24-Hour Rental</option>
@@ -193,6 +197,23 @@
       navigator.serviceWorker.register('/service-worker.js');
     });
   }
+</script>
+
+<script>
+  // Shift time selection enhancement
+  document.querySelectorAll('.shift-select option').forEach(option => {
+    option.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      option.selected = !option.selected;
+      option.classList.toggle('selected', option.selected);
+    });
+  });
+</script>
+
+<script>
+  document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('.navbar').classList.toggle('mobile-visible');
+  });
 </script>
 </body>
 </html>
