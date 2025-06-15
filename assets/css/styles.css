@@ -54,6 +54,50 @@ header img {
   background-color: var(--primary-color);
 }
 
+/* Add these to your existing styles */
+.navbar-container {
+  background-color: var(--dark-color);
+  padding: 10px;
+  position: relative;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.navbar-links a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .navbar-links {
+    flex-direction: column;
+    display: none;
+    width: 100%;
+  }
+  
+  .navbar-links.mobile-visible {
+    display: flex;
+  }
+  
+  .menu-toggle {
+    display: block;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+  }
+}
+
 /* Hero Section */
 .hero {
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
