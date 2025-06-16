@@ -94,6 +94,71 @@
     });
 
     // Rest of the existing scripts remain the same
+      // Form submission
+  document.getElementById('garage-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = document.getElementById('submit-btn');
+    const loading = document.getElementById('loading');
+    
+    submitBtn.disabled = true;
+    loading.style.display = 'block';
+
+    try {
+      const formData = new FormData(e.target);
+      const services = Array.from(formData.getAll('services')).join(', ');
+      
+      const { data, error } = await supabase.from('garage_signups').insert({
+        business_name: formData.get('business_name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        address: formData.get('address'),
+        services: services,
+        message: formData.get('message'),
+        created_at: new Date().toISOString()
+      });
+
+      if (error) throw error;
+      window.location.href = "thank-you.html";
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error submitting form: ${error.message}`);
+    } finally {
+      submitBtn.disabled = false;
+      loading.style.display = 'none';
+    }
+  });
+
+   // PWA Installation
+  let deferredPrompt;
+  const installBtn = document.createElement('button');
+  installBtn.className = 'install-btn';
+  installBtn.textContent = 'Install App';
+  document.body.appendChild(installBtn);
+  installBtn.style.display = 'none';
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'block';
+  });
+
+  installBtn.addEventListener('click', () => {
+    installBtn.style.display = 'none';
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted install');
+      }
+      deferredPrompt = null;
+    });
+  });
+
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js');
+    });
+  }
    
 
     document.addEventListener('DOMContentLoaded', async () => {
