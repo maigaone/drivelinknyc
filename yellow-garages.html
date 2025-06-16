@@ -13,23 +13,40 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+  <header class="site-header">
+    <div class="header-container">
+      <div class="logo-container">
+        <img src="assets/images/logo-new.png" alt="DriveLink NYC" class="logo-img" width="150" height="60">
+        <div class="logo-text">
+          <span class="logo-main">DriveLink</span>
+          <span class="logo-sub">NYC</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<header>
-  <img src="assets/images/logo-new.png" alt="DriveLink NYC Logo">
-</header>
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar-container">
+      <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="hamburger">☰</span>
+        <span class="close">✕</span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <ul class="navbar-links" id="primary-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="drivers.html">For Drivers</a></li>
+        <li><a href="dealerships.html" class="active">For Dealerships</a></li>
+        <li><a href="garages.html">For Garages</a></li>
+        <li><a href="yellow-garages.html">Yellow Taxi Garages</a></li>
+        <li><a href="sell-vehicle.html">Sell Vehicle</a></li>
+        <li><a href="insurance.html">Insurance</a></li>
+        <li><a href="view-listings.html">Listings</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
-<nav class="navbar">
-  <button class="menu-toggle">☰ Menu</button>
-<nav class="navbar mobile-hidden">
-  <a href="index.html">Home</a>
-  <a href="drivers.html">For Drivers</a>
-  <a href="dealerships.html">For Dealerships</a>
-  <a href="garages.html">For Garages</a>
-  <a href="yellow-garages.html" class="active">For Yellow Taxi Garages</a>
-  <a href="sell-vehicle.html">Sell Vehicle</a>
-  <a href="#contact">Contact</a>
-  <a href="view-listings.html">View Listings</a>
-</nav>
+  <main class="main-content">
 
 <div class="hero">
   <h1>Connect with Yellow Taxi Drivers</h1>
@@ -120,16 +137,91 @@
   </div>
 </section>
 
+</main>
+
 <footer>
   <p>&copy; 2025 DriveLink NYC. All rights reserved.</p>
   <p>📩 <a href="mailto:yellowcabs@drivelinknyc.com">yellowcabs@drivelinknyc.com</a></p>
 </footer>
 
 <script>
-  // Initialize Supabase
-  const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+   // Initialize Supabase
+    const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Enhanced menu toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navbarLinks = document.querySelector('.navbar-links');
+      const body = document.body;
+      
+      menuToggle.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !isExpanded);
+        navbarLinks.classList.toggle('active');
+        body.classList.toggle('nav-open');
+      });
+
+      document.querySelectorAll('.navbar-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            navbarLinks.classList.remove('active');
+            body.classList.remove('nav-open');
+          }
+        });
+      });
+
+      function handleResize() {
+        if (window.innerWidth > 768) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          navbarLinks.classList.remove('active');
+          body.classList.remove('nav-open');
+        }
+      }
+      
+      window.addEventListener('resize', handleResize);
+      handleResize();
+    });
+
+    // Enhanced menu toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navbarLinks = document.querySelector('.navbar-links');
+      const body = document.body;
+      
+      menuToggle.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !isExpanded);
+        navbarLinks.classList.toggle('active');
+        body.classList.toggle('nav-open');
+      });
+
+      document.querySelectorAll('.navbar-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            navbarLinks.classList.remove('active');
+            body.classList.remove('nav-open');
+          }
+        });
+      });
+
+      function handleResize() {
+        if (window.innerWidth > 768) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          navbarLinks.classList.remove('active');
+          body.classList.remove('nav-open');
+        }
+      }
+      
+      window.addEventListener('resize', handleResize);
+      handleResize();
+    });  
+
+
 
   // Form submission
   document.getElementById('yellow-garage-form').addEventListener('submit', async (e) => {

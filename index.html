@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DriveLink NYC - Home</title>
+  <title>DriveLink NYC - Your Trusted TLC Rental Marketplace</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0074D9">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,102 +15,118 @@
 </head>
 
 <body>
-  <header>
-    <img alt="DriveLink NYC Logo" src="assets/images/logo-new.png"/>
+  <header class="site-header">
+    <div class="header-container">
+      <div class="logo-container">
+        <img src="assets/images/logo-new.png" alt="DriveLink NYC" class="logo-img" width="150" height="60">
+        <div class="logo-text">
+          <span class="logo-main">DriveLink</span>
+          <span class="logo-sub">NYC</span>
+        </div>
+      </div>
+    </div>
   </header>
 
-<div class="navbar-container">
-    <button class="menu-toggle">☰ Menu</button>
-    <nav class="navbar-links mobile-hidden">
-      <a href="index.html" class="active">Home</a>
-      <a href="drivers.html">For Drivers</a>
-      <a href="dealerships.html">For Dealerships</a>
-      <a href="garages.html">For Garages</a>
-      <a href="yellow-garages.html">Yellow Taxi Garages</a>
-      <a href="sell-vehicle.html">Sell Vehicle</a>
-      <a href="insurance.html">Insurance</a>
-      <a href="view-listings.html">Listings</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-
-  <div class="hero">
-    <h1>Your Trusted TLC Rental Marketplace</h1>
-    <p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
-  </div>
-
-  <section class="section">
-    <h2>Our Services</h2>
-    <div class="features">
-      <div class="feature-card">
-        <h3>For Drivers</h3>
-        <p>Find TLC-ready vehicles for rent or lease-to-own options.</p>
-        <a href="drivers.html" class="btn">Learn More</a>
-      </div>
-      <div class="feature-card">
-        <h3>For Dealerships</h3>
-        <p>List your TLC-licensed vehicles and connect with drivers.</p>
-        <a href="dealerships.html" class="btn">Learn More</a>
-      </div>
-      <div class="feature-card">
-        <h3>For Garages</h3>
-        <p>Offer maintenance services to our network of vehicles.</p>
-        <a href="garages.html" class="btn">Learn More</a>
-      </div>
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar-container">
+      <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="hamburger">☰</span>
+        <span class="close">✕</span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <ul class="navbar-links" id="primary-nav">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="drivers.html">For Drivers</a></li>
+        <li><a href="dealerships.html">For Dealerships</a></li>
+        <li><a href="garages.html">For Garages</a></li>
+        <li><a href="yellow-garages.html">Yellow Taxi Garages</a></li>
+        <li><a href="sell-vehicle.html">Sell Vehicle</a></li>
+        <li><a href="insurance.html">Insurance</a></li>
+        <li><a href="view-listings.html">Listings</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
-  </section>
+  </nav>
 
-  <section class="section" id="list-your-vehicle">
-    <h2>List Your Vehicle</h2>
-    <form id="listing-form">
-      <input name="formType" type="hidden" value="listing"/>
-      <input name="ownerName" placeholder="Your Name" required type="text"/>
-      <input name="email" placeholder="Your Email" required type="email"/>
-      <input name="phone" placeholder="Your Phone Number" required type="tel" pattern="[0-9]{10}"/>
-      <input name="vehicleType" placeholder="Vehicle Type (e.g., Camry, Prius)" required type="text"/>
-      <input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" required type="text"/>
-      <input name="rentalType" placeholder="Rental Type (e.g., Weekly, Monthly)" required type="text"/>
-      <input name="location" placeholder="Location (e.g., Bronx, Brooklyn)" required type="text"/>
-      <input type="file" name="images" multiple accept="image/*" class="file-input" required>
-      <textarea name="additionalDetails" placeholder="Additional details" required rows="4"></textarea>
-      <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
-      <button type="submit" id="submit-listing">Submit Listing</button>
-      <div id="loading-listing" class="loading">Submitting...</div>
-    </form>
-  </section>
-
-  <section class="section" id="contact">
-    <h2>Get in Touch</h2>
-    <form id="contact-form">
-      <input name="formType" type="hidden" value="contact"/>
-      <input name="name" placeholder="Your Name" required type="text">
-      <input name="email" placeholder="Your Email" required type="email"/>
-      <input name="phone" placeholder="Your Phone Number" required type="tel" pattern="[0-9]{10}"/>
-      <select name="role" required>
-        <option value="">I'm a...</option>
-        <option value="Driver">Driver</option>
-        <option value="Dealership">Dealership</option>
-        <option value="Garage">Garage</option>
-        <option value="Car Owner">Car Owner</option>
-      </select>
-      <textarea name="message" placeholder="Your Message" required rows="4"></textarea>
-      <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
-      <button type="submit" id="submit-contact">Submit</button>
-      <div id="loading-contact" class="loading">Submitting...</div>
-    </form>
-  </section>
-
-  <section class="section" id="testimonials">
-    <h2>What Our Users Say</h2>
-    <div class="testimonial">
-      <blockquote>"DriveLink NYC helped me find a TLC car within hours. Highly recommended!"</blockquote>
-      <p>- Jamal A., Driver</p>
+  <main class="main-content">
+    <div class="hero">
+      <h1>Your Trusted TLC Rental Marketplace</h1>
+      <p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
     </div>
-    <div class="testimonial">
-      <blockquote>"We filled three TLC rentals in one week after listing on DriveLink."</blockquote>
-      <p>- Sarah B., Dealership Manager</p>
-    </div>
-  </section>
+
+    <section class="section">
+      <h2>Our Services</h2>
+      <div class="features">
+        <div class="feature-card">
+          <h3>For Drivers</h3>
+          <p>Find TLC-ready vehicles for rent or lease-to-own options.</p>
+          <a href="drivers.html" class="btn">Learn More</a>
+        </div>
+        <div class="feature-card">
+          <h3>For Dealerships</h3>
+          <p>List your TLC-licensed vehicles and connect with drivers.</p>
+          <a href="dealerships.html" class="btn">Learn More</a>
+        </div>
+        <div class="feature-card">
+          <h3>For Garages</h3>
+          <p>Offer maintenance services to our network of vehicles.</p>
+          <a href="garages.html" class="btn">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="list-your-vehicle">
+      <h2>List Your Vehicle</h2>
+      <form id="listing-form">
+        <input name="formType" type="hidden" value="listing"/>
+        <input name="ownerName" placeholder="Your Name" required type="text"/>
+        <input name="email" placeholder="Your Email" required type="email"/>
+        <input name="phone" placeholder="Your Phone Number" required type="tel" pattern="[0-9]{10}"/>
+        <input name="vehicleType" placeholder="Vehicle Type (e.g., Camry, Prius)" required type="text"/>
+        <input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" required type="text"/>
+        <input name="rentalType" placeholder="Rental Type (e.g., Weekly, Monthly)" required type="text"/>
+        <input name="location" placeholder="Location (e.g., Bronx, Brooklyn)" required type="text"/>
+        <input type="file" name="images" multiple accept="image/*" class="file-input" required>
+        <textarea name="additionalDetails" placeholder="Additional details" required rows="4"></textarea>
+        <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
+        <button type="submit" id="submit-listing">Submit Listing</button>
+        <div id="loading-listing" class="loading">Submitting...</div>
+      </form>
+    </section>
+
+    <section class="section" id="contact">
+      <h2>Get in Touch</h2>
+      <form id="contact-form">
+        <input name="formType" type="hidden" value="contact"/>
+        <input name="name" placeholder="Your Name" required type="text">
+        <input name="email" placeholder="Your Email" required type="email"/>
+        <input name="phone" placeholder="Your Phone Number" required type="tel" pattern="[0-9]{10}"/>
+        <select name="role" required>
+          <option value="">I'm a...</option>
+          <option value="Driver">Driver</option>
+          <option value="Dealership">Dealership</option>
+          <option value="Garage">Garage</option>
+          <option value="Car Owner">Car Owner</option>
+        </select>
+        <textarea name="message" placeholder="Your Message" required rows="4"></textarea>
+        <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
+        <button type="submit" id="submit-contact">Submit</button>
+        <div id="loading-contact" class="loading">Submitting...</div>
+      </form>
+    </section>
+
+    <section class="section" id="testimonials">
+      <h2>What Our Users Say</h2>
+      <div class="testimonial">
+        <blockquote>"DriveLink NYC helped me find a TLC car within hours. Highly recommended!"</blockquote>
+        <p>- Jamal A., Driver</p>
+      </div>
+      <div class="testimonial">
+        <blockquote>"We filled three TLC rentals in one week after listing on DriveLink."</blockquote>
+        <p>- Sarah B., Dealership Manager</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p>© 2025 DriveLink NYC. All rights reserved.</p>
@@ -235,26 +251,44 @@
         navigator.serviceWorker.register('/service-worker.js');
       });
     }
+
+    // Enhanced menu toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navbarLinks = document.querySelector('.navbar-links');
+      const body = document.body;
+      
+      // Menu toggle functionality
+      menuToggle.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !isExpanded);
+        navbarLinks.classList.toggle('active');
+        body.classList.toggle('nav-open');
+      });
+
+      // Close menu when clicking on links
+      document.querySelectorAll('.navbar-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            navbarLinks.classList.remove('active');
+            body.classList.remove('nav-open');
+          }
+        });
+      });
+
+      // Handle window resize
+      function handleResize() {
+        if (window.innerWidth > 768) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          navbarLinks.classList.remove('active');
+          body.classList.remove('nav-open');
+        }
+      }
+      
+      window.addEventListener('resize', handleResize);
+      handleResize(); // Initialize
+    });
   </script>
-
-  
-<!-- Added to form submission script -->
-<script>
-  // Initialize Supabase (recommend using env vars)
-  const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
-  
-  // Form submission feedback
-  const feedback = document.createElement('div');
-  feedback.className = 'form-feedback';
-  document.getElementById('listing-form').appendChild(feedback);
-</script>
-
-<script>
-  document.querySelector('.menu-toggle').addEventListener('click', () => {
-    document.querySelector('.navbar').classList.toggle('mobile-visible');
-  });
-</script>
-
 </body>
 </html>
