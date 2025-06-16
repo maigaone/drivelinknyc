@@ -95,38 +95,61 @@
 
     // Rest of the existing scripts remain the same
       // Form submission
-  document.getElementById('garage-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const submitBtn = document.getElementById('submit-btn');
-    const loading = document.getElementById('loading');
-    
-    submitBtn.disabled = true;
-    loading.style.display = 'block';
+  document.getElementById('listing-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = document.getElementById('submit-listing');
+  const loading = document.getElementById('loading-listing');
+  
+  submitBtn.disabled = true;
+  loading.style.display = 'block';
 
-    try {
-      const formData = new FormData(e.target);
-      const services = Array.from(formData.getAll('services')).join(', ');
-      
-      const { data, error } = await supabase.from('garage_signups').insert({
-        business_name: formData.get('business_name'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        address: formData.get('address'),
-        services: services,
-        message: formData.get('message'),
-        created_at: new Date().toISOString()
-      });
+  try {
+    const form = e.target;
+    const formData = new FormData(form);
+    const files = formData.getAll('images');
+    const imageUrls = [];
 
-      if (error) throw error;
-      window.location.href = "thank-you.html";
-    } catch (error) {
-      console.error('Error:', error);
-      alert(`Error submitting form: ${error.message}`);
-    } finally {
-      submitBtn.disabled = false;
-      loading.style.display = 'none';
+    // Check if files were selected
+    if (files.length === 0 || (files.length === 1 && files[0].size === 0)) {
+      throw new Error("Please select at least one image");
     }
-  });
+
+    for (const file of files) {
+      if (file.size === 0) continue; // Skip empty files
+      
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      
+      const { data, error } = await supabase.storage
+        .from('vehicle-images')
+        .upload(`listings/${fileName}`, file);
+      
+      if (error) throw error;
+      imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/vehicle-images/listings/${fileName}`);
+    }
+
+    const { data, error } = await supabase.from('listings').insert({
+      owner_name: formData.get('ownerName'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      vehicle_type: formData.get('vehicleType'),
+      tlc_plate: formData.get('tlcPlate'),
+      rental_type: formData.get('rentalType'),
+      location: formData.get('location'),
+      additional_details: formData.get('additionalDetails'),
+      image_urls: imageUrls
+    });
+
+    if (error) throw error;
+    window.location.href = "thank-you.html";
+  } catch (error) {
+    console.error('Error:', error);
+    alert("Error submitting listing: " + error.message);
+  } finally {
+    submitBtn.disabled = false;
+    loading.style.display = 'none';
+  }
+});
 
    // PWA Installation
   let deferredPrompt;

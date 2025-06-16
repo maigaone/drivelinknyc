@@ -189,36 +189,41 @@
       }
     });
 
-    document.getElementById('contact-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const submitBtn = document.getElementById('submit-contact');
-      const loading = document.getElementById('loading-contact');
-      
-      submitBtn.disabled = true;
-      loading.style.display = 'block';
+ document.getElementById('contact-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = document.getElementById('submit-contact');
+  const loading = document.getElementById('loading-contact');
+  
+  submitBtn.disabled = true;
+  loading.style.display = 'block';
 
-      try {
-        const form = e.target;
-        const formData = new FormData(form);
+  try {
+    const form = e.target;
+    const formData = new FormData(form);
 
-        const { data, error } = await supabase.from('contacts').insert({
-          name: formData.get('name'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          role: formData.get('role'),
-          message: formData.get('message')
-        });
+    // Validate required fields
+    if (!formData.get('name') || !formData.get('email') || !formData.get('message')) {
+      throw new Error("Please fill all required fields");
+    }
 
-        if (error) throw error;
-        window.location.href = "thank-you.html";
-      } catch (error) {
-        console.error('Error:', error);
-        alert("Error submitting contact form. Please try again.");
-      } finally {
-        submitBtn.disabled = false;
-        loading.style.display = 'none';
-      }
+    const { data, error } = await supabase.from('contacts').insert({
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      role: formData.get('role'),
+      message: formData.get('message')
     });
+
+    if (error) throw error;
+    window.location.href = "thank-you.html";
+  } catch (error) {
+    console.error('Error:', error);
+    alert("Error submitting contact form: " + error.message);
+  } finally {
+    submitBtn.disabled = false;
+    loading.style.display = 'none';
+  }
+});
 
     // PWA Installation
     let deferredPrompt;
