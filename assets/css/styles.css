@@ -31,7 +31,8 @@ header img {
   animation: fadeIn 0.8s ease-in;
 }
 
-/* Navigation */
+
+/* ===== Navigation and Mobile Update ===== */
 .navbar {
   background-color: var(--dark-color);
   display: flex;
@@ -41,24 +42,11 @@ header img {
   flex-wrap: wrap;
 }
 
-.navbar a {
-  color: var(--white);
-  text-decoration: none;
-  font-weight: bold;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.navbar a:hover, .navbar a.active {
-  background-color: var(--primary-color);
-}
-
-/* Add these to your existing styles */
 .navbar-container {
   background-color: var(--dark-color);
   padding: 10px;
   position: relative;
+  width: 100%;
 }
 
 .navbar-links {
@@ -66,6 +54,7 @@ header img {
   gap: 15px;
   flex-wrap: wrap;
   justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .navbar-links a {
@@ -74,29 +63,115 @@ header img {
   padding: 8px 12px;
   border-radius: 4px;
   transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.navbar a:hover, 
+.navbar a.active,
+.navbar-links a.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Active tab indicator */
+.navbar-links a.active {
+  position: relative;
+}
+
+.navbar-links a.active:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--primary-color);
+}
+
+/* Mobile menu toggle */
+.menu-toggle {
+  display: none;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 10px auto;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1.1rem;
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  
   .navbar-links {
-    flex-direction: column;
     display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  .navbar-links.active {
+    display: flex;
+    max-height: 1000px;
+  }
+  
+  .navbar-links li {
     width: 100%;
   }
   
-  .navbar-links.mobile-visible {
-    display: flex;
+  .navbar-links a {
+    display: block;
+    padding: 15px 20px;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
   
-  .menu-toggle {
-    display: block;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin-bottom: 10px;
+  .navbar-container {
+    flex-direction: column;
+    padding: 0;
+  }
+  
+  .navbar-links a.active:after {
+    display: none;
   }
 }
+/*=======End Update======*/
+
+
+
+/* Ensure proper box sizing */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+/* Make images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Improve form styling */
+select[multiple] option {
+  padding: 8px;
+  margin: 2px 0;
+  background: #f8f8f8;
+}
+
+select[multiple] option:checked {
+  background: var(--primary-color);
+  color: white;
+}
+
 
 /* Add to styles.css */
 select[multiple] {
@@ -188,7 +263,7 @@ select[multiple] option {
     }
   }
 
-/* Verification Badges */
+/* ======Verification Badges====== */
 .verified-badge {
   background: #F5C400;
   color: #000;
@@ -199,39 +274,7 @@ select[multiple] option {
   display: inline-block;
 }
 
-/* Form Feedback */
-.form-feedback {
-  margin-top: 15px;
-  font-weight: bold;
-  padding: 10px;
-  border-radius: 4px;
-}
-.form-feedback.success {
-  background: #d4edda;
-  color: #155724;
-}
-.form-feedback.error {
-  background: #f8d7da;
-  color: #721c24;
-}
-
-/* Mobile Menu */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    display: none;
-  }
-  .navbar.mobile-visible {
-    display: flex;
-  }
-  .menu-toggle {
-    display: block;
-    padding: 15px;
-    background: #0074D9;
-    color: white;
-  }
-}
-
+ 
 /* ====================== */
 /* Yellow Garage Specific */
 /* ====================== */
@@ -288,16 +331,6 @@ select[multiple] option {
   margin-left: -1em;
 }
 
-/* Verification Badges */
-.verified-badge {
-  background: #F5C400;
-  color: #000;
-  font-size: 0.8rem;
-  padding: 2px 8px;
-  border-radius: 12px;
-  margin-left: 8px;
-  display: inline-block;
-}
 
 /* Form Feedback */
 .form-feedback {
@@ -326,22 +359,18 @@ select[multiple] option {
     }
   }
 
-/* Mobile Menu */
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    display: none;
+  .features, .pricing-options, .vehicle-grid {
+    grid-template-columns: 1fr;
   }
-  .navbar.mobile-visible {
-    display: flex;
-  }
-  .menu-toggle {
-    display: block;
-    padding: 15px;
-    background: #0074D9;
-    color: white;
+  
+  .partner img {
+    width: 100px;
+    height: 100px;
   }
 }
+
+
 
 /* Yellow specific hero */
 .yellow-hero {
