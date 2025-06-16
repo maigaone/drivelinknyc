@@ -98,6 +98,22 @@ header img {
   }
 }
 
+/* Add to styles.css */
+select[multiple] {
+  height: auto;
+  min-height: 100px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+select[multiple] option {
+  padding: 8px;
+  margin: 2px 0;
+}
+
+/*=============*/
+
 /* Hero Section */
 .hero {
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
