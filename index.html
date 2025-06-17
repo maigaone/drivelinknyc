@@ -193,6 +193,7 @@ pattern="[0-9]{10}"/>
     });
 
 // Update the contact form submission handler:
+
 document.getElementById('contact-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const submitBtn = document.getElementById('submit-contact');
@@ -202,21 +203,25 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
   loading.style.display = 'block';
 
   try {
-    // Verify reCAPTCHA first
-    if (!grecaptcha || !grecaptcha.getResponse()) {
+    // Verify reCAPTCHA
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
       throw new Error("Please complete the reCAPTCHA verification");
     }
 
     const form = e.target;
     const formData = new FormData(form);
 
-    // Test Supabase connection first
+    // Check if table exists by doing a test select
     const { error: testError } = await supabase
       .from('contacts')
-      .insert({ name: 'test' });
-    
-    if (testError && testError.message.includes('relation "contacts" does not exist')) {
-      throw new Error("Database table not configured. Please create a 'contacts' table in Supabase.");
+      .select('*')
+      .limit(1);
+
+    if (testError) {
+      // If table doesn't exist, create it (or show error)
+      console.error('Supabase error:', testError);
+      throw new Error("Contact system is currently unavailable. Please try emailing us directly.");
     }
 
     const { data, error } = await supabase.from('contacts').insert({
@@ -225,7 +230,8 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
       phone: formData.get('phone'),
       role: formData.get('role'),
       message: formData.get('message'),
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
+      recaptcha_response: recaptchaResponse // Optional: store recaptcha response
     });
 
     if (error) throw error;
@@ -241,6 +247,8 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
     loading.style.display = 'none';
   }
 });
+
+
     // PWA Installation
     let deferredPrompt;
     const installBtn = document.createElement('button');
