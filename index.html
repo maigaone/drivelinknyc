@@ -118,13 +118,14 @@
   </footer>
 
   <script>
-    // Initialize Supabase
-    const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+   <script>
+  // Initialize Supabase
+  const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Form submissions
-    document.getElementById('listing-form').addEventListener('submit', async (e) => {
+  // Form submissions
+  document.getElementById('listing-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = document.getElementById('submit-listing');
       const loading = document.getElementById('loading-listing');
@@ -173,87 +174,95 @@
         loading.style.display = 'none';
       }
     });
-
-    // PWA Installation
-    let deferredPrompt;
-    const installBtn = document.createElement('button');
-    installBtn.className = 'install-btn';
-    installBtn.textContent = 'Install App';
-    document.body.appendChild(installBtn);
-    installBtn.style.display = 'none';
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'block';
-    });
-
-    installBtn.addEventListener('click', () => {
-      installBtn.style.display = 'none';
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted install');
-        }
-        deferredPrompt = null;
-      });
-    });
-
-    // Service Worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js');
-      });
-    }
-
     
-     // Enhanced mobile menu script
-document.addEventListener('DOMContentLoaded', function() {
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navbarLinks = document.querySelector('.navbar-links');
-  const body = document.body;
 
-  menuToggle.addEventListener('click', function(e) {
-    e.stopPropagation(); // Prevent event bubbling
-    const isExpanded = this.getAttribute('aria-expanded') === 'true';
-    this.setAttribute('aria-expanded', !isExpanded);
-    navbarLinks.classList.toggle('active');
-    body.classList.toggle('nav-open');
+     // PWA Installation
+  let deferredPrompt;
+  const installBtn = document.createElement('button');
+  installBtn.className = 'install-btn';
+  installBtn.textContent = 'Install App';
+  document.body.appendChild(installBtn);
+  installBtn.style.display = 'none';
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'block';
   });
 
-  // Close menu when clicking outside
-  document.addEventListener('click', function(e) {
-    if (!navbarLinks.contains(e.target) {
-      menuToggle.setAttribute('aria-expanded', 'false');
-      navbarLinks.classList.remove('active');
-      body.classList.remove('nav-open');
-    }
+  installBtn.addEventListener('click', () => {
+    installBtn.style.display = 'none';
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted install');
+      }
+      deferredPrompt = null;
+    });
   });
 
-  // Close menu when clicking links (mobile)
-  document.querySelectorAll('.navbar-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js');
+    });
+  }
+
+  // Enhanced mobile menu script - CORRECTED VERSION
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbarLinks = document.querySelector('.navbar-links');
+    const body = document.body;
+
+    // Menu toggle functionality
+    menuToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !isExpanded);
+      navbarLinks.classList.toggle('active');
+      body.classList.toggle('nav-open');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!navbarLinks.contains(e.target) && !menuToggle.contains(e.target)) {
         menuToggle.setAttribute('aria-expanded', 'false');
         navbarLinks.classList.remove('active');
         body.classList.remove('nav-open');
       }
     });
-  });
-});
 
-      // Handle window resize
-      function handleResize() {
-        if (window.innerWidth > 768) {
+    // Close menu when clicking links (mobile)
+    document.querySelectorAll('.navbar-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
           menuToggle.setAttribute('aria-expanded', 'false');
           navbarLinks.classList.remove('active');
           body.classList.remove('nav-open');
         }
-      }
-      
-      window.addEventListener('resize', handleResize);
-      handleResize(); // Initialize
+      });
     });
+
+    // Handle window resize
+    function handleResize() {
+      if (window.innerWidth > 768) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        navbarLinks.classList.remove('active');
+        body.classList.remove('nav-open');
+      }
+    }
+    
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initialize
+  });
+</script>
+   
+    
+
+    
+
+
+
   </script>
 </body>
 </html>
