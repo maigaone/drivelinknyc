@@ -86,6 +86,7 @@
         <input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" required type="text"/>
         <input name="rentalType" placeholder="Rental Type (e.g., Weekly, Monthly)" required type="text"/>
         <input name="location" placeholder="Location (e.g., Bronx, Brooklyn)" required type="text"/>
+ <input name="price" placeholder="Price per day ($)" required type="number" min="1">
         <input type="file" name="images" multiple accept="image/*" class="file-input" required>
         <textarea name="additionalDetails" placeholder="Additional details" required rows="4"></textarea>
         <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
@@ -102,8 +103,7 @@
         <input name="email" placeholder="Your Email" required type="email"/>
         <input name="phone" placeholder="Your Phone Number" required type="tel" 
 pattern="[0-9]{10}"/>
-        <input name="price" placeholder="Price per day ($)" required type="number" min="1">
-        <select name="role" required>
+         <select name="role" required>
           <option value="">I'm a...</option>
           <option value="Driver">Driver</option>
           <option value="Dealership">Dealership</option>
@@ -192,7 +192,8 @@ pattern="[0-9]{10}"/>
       }
     });
 
- document.getElementById('contact-form').addEventListener('submit', async (e) => {
+// Update the contact form submission handler:
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const submitBtn = document.getElementById('submit-contact');
   const loading = document.getElementById('loading-contact');
@@ -201,12 +202,21 @@ pattern="[0-9]{10}"/>
   loading.style.display = 'block';
 
   try {
+    // Verify reCAPTCHA first
+    if (!grecaptcha || !grecaptcha.getResponse()) {
+      throw new Error("Please complete the reCAPTCHA verification");
+    }
+
     const form = e.target;
     const formData = new FormData(form);
 
-    // Validate required fields
-    if (!formData.get('name') || !formData.get('email') || !formData.get('message')) {
-      throw new Error("Please fill all required fields");
+    // Test Supabase connection first
+    const { error: testError } = await supabase
+      .from('contacts')
+      .insert({ name: 'test' });
+    
+    if (testError && testError.message.includes('relation "contacts" does not exist')) {
+      throw new Error("Database table not configured. Please create a 'contacts' table in Supabase.");
     }
 
     const { data, error } = await supabase.from('contacts').insert({
@@ -214,20 +224,23 @@ pattern="[0-9]{10}"/>
       email: formData.get('email'),
       phone: formData.get('phone'),
       role: formData.get('role'),
-      message: formData.get('message')
+      message: formData.get('message'),
+      created_at: new Date().toISOString()
     });
 
     if (error) throw error;
     window.location.href = "thank-you.html";
   } catch (error) {
-    console.error('Error:', error);
-    alert("Error submitting contact form: " + error.message);
+    console.error('Contact form error:', error);
+    alert(`Error: ${error.message}`);
+    if (typeof grecaptcha !== 'undefined') {
+      grecaptcha.reset();
+    }
   } finally {
     submitBtn.disabled = false;
     loading.style.display = 'none';
   }
 });
-
     // PWA Installation
     let deferredPrompt;
     const installBtn = document.createElement('button');
