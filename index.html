@@ -100,7 +100,9 @@
         <input name="formType" type="hidden" value="contact"/>
         <input name="name" placeholder="Your Name" required type="text">
         <input name="email" placeholder="Your Email" required type="email"/>
-        <input name="phone" placeholder="Your Phone Number" required type="tel" pattern="[0-9]{10}"/>
+        <input name="phone" placeholder="Your Phone Number" required type="tel" 
+pattern="[0-9]{10}"/>
+        <input name="price" placeholder="Price per day ($)" required type="number" min="1">
         <select name="role" required>
           <option value="">I'm a...</option>
           <option value="Driver">Driver</option>
@@ -174,6 +176,7 @@
           tlc_plate: formData.get('tlcPlate'),
           rental_type: formData.get('rentalType'),
           location: formData.get('location'),
+          price_per_day: formData.get('price'),
           additional_details: formData.get('additionalDetails'),
           image_urls: imageUrls
         });

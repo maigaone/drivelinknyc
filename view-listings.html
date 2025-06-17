@@ -53,135 +53,110 @@
   </main>
 
   <script>
-    // Initialize Supabase
-    const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+   // Initialize Supabase
+const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Enhanced menu toggle functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const menuToggle = document.querySelector('.menu-toggle');
-      const navbarLinks = document.querySelector('.navbar-links');
-      const body = document.body;
-      
-      menuToggle.addEventListener('click', function() {
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !isExpanded);
-        navbarLinks.classList.toggle('active');
-        body.classList.toggle('nav-open');
-      });
-
-      document.querySelectorAll('.navbar-links a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
-            menuToggle.setAttribute('aria-expanded', 'false');
-            navbarLinks.classList.remove('active');
-            body.classList.remove('nav-open');
-          }
-        });
-      });
-
-      function handleResize() {
-        if (window.innerWidth > 768) {
-          menuToggle.setAttribute('aria-expanded', 'false');
-          navbarLinks.classList.remove('active');
-          body.classList.remove('nav-open');
-        }
-      }
-      
-      window.addEventListener('resize', handleResize);
-      handleResize();
-    });
-
-    // Rest of the existing scripts remain the same
-      // Form submission
-  document.getElementById('listing-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const submitBtn = document.getElementById('submit-listing');
-  const loading = document.getElementById('loading-listing');
+document.addEventListener('DOMContentLoaded', async () => {
+  const container = document.getElementById('listings-container');
+  const loadingMsg = document.getElementById('loading-message');
+  const errorMsg = document.getElementById('error-message');
   
-  submitBtn.disabled = true;
-  loading.style.display = 'block';
-
   try {
-    const form = e.target;
-    const formData = new FormData(form);
-    const files = formData.getAll('images');
-    const imageUrls = [];
-
-    // Check if files were selected
-    if (files.length === 0 || (files.length === 1 && files[0].size === 0)) {
-      throw new Error("Please select at least one image");
-    }
-
-    for (const file of files) {
-      if (file.size === 0) continue; // Skip empty files
-      
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      
-      const { data, error } = await supabase.storage
-        .from('vehicle-images')
-        .upload(`listings/${fileName}`, file);
-      
-      if (error) throw error;
-      imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/vehicle-images/listings/${fileName}`);
-    }
-
-    const { data, error } = await supabase.from('listings').insert({
-      owner_name: formData.get('ownerName'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      vehicle_type: formData.get('vehicleType'),
-      tlc_plate: formData.get('tlcPlate'),
-      rental_type: formData.get('rentalType'),
-      location: formData.get('location'),
-      additional_details: formData.get('additionalDetails'),
-      image_urls: imageUrls
-    });
-
+    loadingMsg.style.display = 'block';
+    errorMsg.style.display = 'none';
+    
+    const { data, error } = await supabase
+      .from('listings')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
     if (error) throw error;
-    window.location.href = "thank-you.html";
+    
+    if (data.length === 0) {
+      container.innerHTML = '<p class="no-listings">No listings available at this time. Check back later!</p>';
+      loadingMsg.style.display = 'none';
+      return;
+    }
+    
+    const fragment = document.createDocumentFragment();
+    
+    data.forEach(listing => {
+      const card = document.createElement('div');
+      card.className = 'listing-card';
+      
+      // Handle missing images
+      const imagesHTML = listing.image_urls && listing.image_urls.length > 0 
+        ? listing.image_urls.map(url => 
+            `<img src="${url}" alt="${listing.vehicle_type}" loading="lazy">`
+          ).join('')
+        : `<div class="no-image">No Image Available</div>`;
+      
+      card.innerHTML = `
+        <div class="card-header">
+          <h3>${listing.vehicle_type || 'Vehicle'}</h3>
+          <p class="tlc-plate">${listing.tlc_plate || 'TLC Plate Not Provided'}</p>
+        </div>
+        <div class="images">${imagesHTML}</div>
+        <div class="listing-details">
+          <p><strong>Location:</strong> ${listing.location || 'Not specified'}</p>
+          <p><strong>Rental Type:</strong> ${listing.rental_type || 'Not specified'}</p>
+          ${listing.additional_details ? `<p class="details">${listing.additional_details}</p>` : ''}
+          <div class="contact-info">
+            <p><strong>Contact:</strong> ${listing.owner_name || 'Name not provided'}</p>
+            ${listing.phone ? `<p><strong>Phone:</strong> ${listing.phone}</p>` : ''}
+          </div>
+        </div>
+      `;
+      
+      fragment.appendChild(card);
+    });
+    
+    container.innerHTML = '';
+    container.appendChild(fragment);
+    loadingMsg.style.display = 'none';
+    
   } catch (error) {
-    console.error('Error:', error);
-    alert("Error submitting listing: " + error.message);
-  } finally {
-    submitBtn.disabled = false;
-    loading.style.display = 'none';
+    console.error('Error loading listings:', error);
+    loadingMsg.style.display = 'none';
+    errorMsg.textContent = 'Failed to load listings. Please try again later.';
+    errorMsg.style.display = 'block';
   }
 });
 
-   // PWA Installation
-  let deferredPrompt;
-  const installBtn = document.createElement('button');
-  installBtn.className = 'install-btn';
-  installBtn.textContent = 'Install App';
-  document.body.appendChild(installBtn);
+
+// PWA Installation
+let deferredPrompt;
+const installBtn = document.createElement('button');
+installBtn.className = 'install-btn';
+installBtn.textContent = 'Install App';
+document.body.appendChild(installBtn);
+installBtn.style.display = 'none';
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', () => {
   installBtn.style.display = 'none';
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'block';
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted install');
+    }
+    deferredPrompt = null;
   });
+});
 
-  installBtn.addEventListener('click', () => {
-    installBtn.style.display = 'none';
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted install');
-      }
-      deferredPrompt = null;
-    });
+// Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js');
   });
-
-  // Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js');
-    });
-  }
+}
    
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -231,8 +206,6 @@
         loadingMsg.style.display = 'none';
         errorMsg.textContent = 'Failed to load listings. Please try again later.';
         errorMsg.classList.remove('hidden');
-
-
 
       }
     });
