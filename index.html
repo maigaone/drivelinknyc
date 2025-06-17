@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>DriveLink NYC - Your Trusted TLC Rental Marketplace</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0074D9">
@@ -206,30 +206,41 @@
       });
     }
 
-    // Enhanced menu toggle functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const menuToggle = document.querySelector('.menu-toggle');
-      const navbarLinks = document.querySelector('.navbar-links');
-      const body = document.body;
-      
-      // Menu toggle functionality
-      menuToggle.addEventListener('click', function() {
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !isExpanded);
-        navbarLinks.classList.toggle('active');
-        body.classList.toggle('nav-open');
-      });
+    
+     // Enhanced mobile menu script
+document.addEventListener('DOMContentLoaded', function() {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navbarLinks = document.querySelector('.navbar-links');
+  const body = document.body;
 
-      // Close menu when clicking on links
-      document.querySelectorAll('.navbar-links a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
-            menuToggle.setAttribute('aria-expanded', 'false');
-            navbarLinks.classList.remove('active');
-            body.classList.remove('nav-open');
-          }
-        });
-      });
+  menuToggle.addEventListener('click', function(e) {
+    e.stopPropagation(); // Prevent event bubbling
+    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+    this.setAttribute('aria-expanded', !isExpanded);
+    navbarLinks.classList.toggle('active');
+    body.classList.toggle('nav-open');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!navbarLinks.contains(e.target) {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      navbarLinks.classList.remove('active');
+      body.classList.remove('nav-open');
+    }
+  });
+
+  // Close menu when clicking links (mobile)
+  document.querySelectorAll('.navbar-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        navbarLinks.classList.remove('active');
+        body.classList.remove('nav-open');
+      }
+    });
+  });
+});
 
       // Handle window resize
       function handleResize() {
