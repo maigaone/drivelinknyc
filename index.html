@@ -43,7 +43,7 @@
         <li><a href="sell-vehicle.html">Sell Vehicle</a></li>
         <li><a href="insurance.html">Insurance</a></li>
         <li><a href="view-listings.html">Listings</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -52,6 +52,7 @@
     <div class="hero">
       <h1>Your Trusted TLC Rental Marketplace</h1>
       <p>Connecting NYC drivers with dealerships, garages, and TLC vehicle owners in one smart platform.</p>
+      <a href="contact.html" class="btn secondary">Contact Us</a>
     </div>
 
     <section class="section">
@@ -86,34 +87,12 @@
         <input name="tlcPlate" placeholder="TLC Plate# (e.g., T010101C)" required type="text"/>
         <input name="rentalType" placeholder="Rental Type (e.g., Weekly, Monthly)" required type="text"/>
         <input name="location" placeholder="Location (e.g., Bronx, Brooklyn)" required type="text"/>
- <input name="price" placeholder="Price per day ($)" required type="number" min="1">
+        <input name="price" placeholder="Price per day ($)" required type="number" min="1">
         <input type="file" name="images" multiple accept="image/*" class="file-input" required>
         <textarea name="additionalDetails" placeholder="Additional details" required rows="4"></textarea>
         <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
         <button type="submit" id="submit-listing">Submit Listing</button>
         <div id="loading-listing" class="loading">Submitting...</div>
-      </form>
-    </section>
-
-    <section class="section" id="contact">
-      <h2>Get in Touch</h2>
-      <form id="contact-form">
-        <input name="formType" type="hidden" value="contact"/>
-        <input name="name" placeholder="Your Name" required type="text">
-        <input name="email" placeholder="Your Email" required type="email"/>
-        <input name="phone" placeholder="Your Phone Number" required type="tel" 
-pattern="[0-9]{10}"/>
-         <select name="role" required>
-          <option value="">I'm a...</option>
-          <option value="Driver">Driver</option>
-          <option value="Dealership">Dealership</option>
-          <option value="Garage">Garage</option>
-          <option value="Car Owner">Car Owner</option>
-        </select>
-        <textarea name="message" placeholder="Your Message" required rows="4"></textarea>
-        <div class="g-recaptcha" data-sitekey="6LemWV4rAAAAAG6HMa_C2m04EU41rVuNB-dZnfgt"></div>
-        <button type="submit" id="submit-contact">Submit</button>
-        <div id="loading-contact" class="loading">Submitting...</div>
       </form>
     </section>
 
@@ -131,6 +110,9 @@ pattern="[0-9]{10}"/>
   </main>
 
   <footer>
+    <div class="footer-cta">
+      <a href="contact.html" class="btn">Get in Touch</a>
+    </div>
     <p>© 2025 DriveLink NYC. All rights reserved.</p>
     <p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
   </footer>
@@ -191,63 +173,6 @@ pattern="[0-9]{10}"/>
         loading.style.display = 'none';
       }
     });
-
-// Update the contact form submission handler:
-
-document.getElementById('contact-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const submitBtn = document.getElementById('submit-contact');
-  const loading = document.getElementById('loading-contact');
-  
-  submitBtn.disabled = true;
-  loading.style.display = 'block';
-
-  try {
-    // Verify reCAPTCHA
-    const recaptchaResponse = grecaptcha.getResponse();
-    if (!recaptchaResponse) {
-      throw new Error("Please complete the reCAPTCHA verification");
-    }
-
-    const form = e.target;
-    const formData = new FormData(form);
-
-    // Check if table exists by doing a test select
-    const { error: testError } = await supabase
-      .from('contacts')
-      .select('*')
-      .limit(1);
-
-    if (testError) {
-      // If table doesn't exist, create it (or show error)
-      console.error('Supabase error:', testError);
-      throw new Error("Contact system is currently unavailable. Please try emailing us directly.");
-    }
-
-    const { data, error } = await supabase.from('contacts').insert({
-      name: formData.get('name'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      role: formData.get('role'),
-      message: formData.get('message'),
-      created_at: new Date().toISOString(),
-      recaptcha_response: recaptchaResponse // Optional: store recaptcha response
-    });
-
-    if (error) throw error;
-    window.location.href = "thank-you.html";
-  } catch (error) {
-    console.error('Contact form error:', error);
-    alert(`Error: ${error.message}`);
-    if (typeof grecaptcha !== 'undefined') {
-      grecaptcha.reset();
-    }
-  } finally {
-    submitBtn.disabled = false;
-    loading.style.display = 'none';
-  }
-});
-
 
     // PWA Installation
     let deferredPrompt;
