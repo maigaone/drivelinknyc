@@ -33,7 +33,7 @@ img {
 /* Header & Logo */
 /* ================ */
 header {
-  background-color: var(--lightgray);
+  background-color: var(--lightgrey);
   text-align: center;
   padding: 20px 0;
 }
