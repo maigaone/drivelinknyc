@@ -26,7 +26,7 @@ function initMobileMenu() {
 
   // Close menu when clicking outside
   document.addEventListener('click', function(e) {
-    if (!navbarLinks.contains(e.target) {
+    if (!navbarLinks.contains(e.target) && e.target !== menuToggle) {
       menuToggle.setAttribute('aria-expanded', 'false');
       navbarLinks.classList.remove('active');
       body.classList.remove('nav-open');
