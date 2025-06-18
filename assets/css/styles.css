@@ -33,7 +33,7 @@ img {
 /* Header & Logo */
 /* ================ */
 header {
-  background-color: var(--white);
+  background-color: var(--lightgray);
   text-align: center;
   padding: 20px 0;
 }
@@ -1002,3 +1002,9 @@ footer a:hover {
     font-size: 0.9rem;
   }
 }
+
+
+
+
+
+
