@@ -32,6 +32,7 @@ img {
 /* ================ */
 /* Header & Logo */
 /* ================ */
+
 header {
   background-color: var(--black);
   text-align: center;
@@ -45,10 +46,19 @@ header {
 
 
 .logo-img {
-  width: 300px; /* Adjust this value as needed */
+  width: 250px; /* Adjust this value as needed */
   height: auto;
   max-width: 80%; /* Ensures it stays responsive */
   animation: fadeIn 0.8s ease-in;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+
+
+/* Optional hover effect */
+.logo-img:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
 }
 
 /* ================ */
@@ -180,8 +190,8 @@ header {
   }
 
   .logo-img {
-    width: 220px;
-    max-width: 90%;
+    width: 150px;
+    max-width: 80%;
   }
 
   /* Prevent body scroll when menu is open */
@@ -204,13 +214,7 @@ header {
     padding: 15px 0;
   }
 
-  .logo-main {
-    font-size: 1.5rem;
-  }
 
-  .logo-sub {
-    font-size: 1rem;
-  }
 
   /* Hero section */
   .hero {
