@@ -11,6 +11,7 @@
   <link rel="icon" type="image/png" href="assets/images/favicon.png">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/mobile-menu.js" defer></script>
 </head>
 
 <body>
@@ -164,40 +165,9 @@
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Enhanced menu toggle functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const menuToggle = document.querySelector('.menu-toggle');
-      const navbarLinks = document.querySelector('.navbar-links');
-      const body = document.body;
-      
-      menuToggle.addEventListener('click', function() {
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !isExpanded);
-        navbarLinks.classList.toggle('active');
-        body.classList.toggle('nav-open');
-      });
+    
 
-      document.querySelectorAll('.navbar-links a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
-            menuToggle.setAttribute('aria-expanded', 'false');
-            navbarLinks.classList.remove('active');
-            body.classList.remove('nav-open');
-          }
-        });
-      });
-
-      function handleResize() {
-        if (window.innerWidth > 768) {
-          menuToggle.setAttribute('aria-expanded', 'false');
-          navbarLinks.classList.remove('active');
-          body.classList.remove('nav-open');
-        }
-      }
-      
-      window.addEventListener('resize', handleResize);
-      handleResize();
-    });
+  
 
     // Rest of the existing scripts remain the same
    
