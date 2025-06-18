@@ -86,10 +86,10 @@ header {
   gap: 15px;
   flex-wrap: wrap;
   justify-content: center;
-  transition: all 0.3s ease;
   list-style: none;
   padding: 0;
   margin: 0;
+  transition: transform 0.3s ease-out, max-height 0.3s ease-out;
 }
 
 .navbar-links a {
@@ -140,12 +140,33 @@ header {
 /* ================ */
 /* Responsive Design - Enhanced Mobile Support */
 /* ================ */
+
+/* New mobile menu styles */
 @media (max-width: 768px) {
-  /* Improved mobile menu */
-  .navbar {
+  .nav-open {
+    overflow: hidden;
+  }
+
+ .navbar {
     padding: 0;
     flex-direction: column;
   }
+  
+  .navbar-links {
+    transform: translateX(100%);
+  }
+  
+  .navbar-links.active {
+    transform: translateX(0);
+  }
+}
+
+/* Focus styles */
+.menu-toggle:focus {
+  outline: 2px solid #0074D9;
+  outline-offset: 2px;
+}
+
 
   .navbar-container {
     padding: 0;
@@ -166,7 +187,9 @@ header {
     left: 0;
     background-color: var(--dark-color);
     z-index: 1000;
-    transition: max-height 0.3s ease-out;
+    transition: transform 0.3s ease-out, max-height 0.3s ease-out;
+    will-change: transform, max-height;
+     overscroll-behavior: contain;
   }
 
   .navbar-links.active {
@@ -193,6 +216,13 @@ header {
     width: 150px;
     max-width: 80%;
   }
+
+@supports (backdrop-filter: blur(5px)) {
+  .navbar-links {
+    backdrop-filter: blur(5px);
+    background-color: rgba(34, 34, 34, 0.95);
+  }
+}
 
   /* Prevent body scroll when menu is open */
   body.nav-open {
@@ -264,7 +294,7 @@ header {
     }
     
     .navbar-links {
-      padding-bottom: env(safe-area-inset-bottom);
+      padding-bottom: max(20px, env(safe-area-inset-bottom));	
     }
     
     .floating-cta {
