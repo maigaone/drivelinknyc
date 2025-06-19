@@ -7,8 +7,30 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0074D9">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="DriveLink NYC">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <meta name="msapplication-TileColor" content="#0074D9">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+
+<!-- Main Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+
+<!-- 2. Legacy Browsers (ICO) -->
+<link rel="shortcut icon" href="/assets/icons/favicon.ico">
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+
+<!-- Android/Chrome -->
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#0074D9">
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/site.webmanifest">
+
+
   <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -114,7 +136,6 @@
     <p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
   </footer>
 
-  <script>
    <script>
   // Initialize Supabase
   const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
@@ -156,7 +177,7 @@
           tlc_plate: formData.get('tlcPlate'),
           rental_type: formData.get('rentalType'),
           location: formData.get('location'),
-          price_per_day: formData.get('price'),
+          price_per_day: Number(formData.get('price')),
           additional_details: formData.get('additionalDetails'),
           image_urls: imageUrls
         });
@@ -165,7 +186,7 @@
         window.location.href = "thank-you.html";
       } catch (error) {
         console.error('Error:', error);
-        alert("Error submitting listing. Please try again.");
+        alert(`Error submitting listing: ${error.message}`);
       } finally {
         submitBtn.disabled = false;
         loading.style.display = 'none';
