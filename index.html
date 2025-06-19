@@ -181,33 +181,23 @@
         }
 
         // Insert listing
-        const { data, error } = await window.supabase
-          .from('listings')
-          .insert({
-            owner_name: String(formData.get('ownerName')),
-            email: String(formData.get('email')),
-            phone: String(formData.get('phone')),
-            vehicle_type: String(formData.get('vehicleType')),
-            tlc_plate: String(formData.get('tlcPlate')),
-            rental_type: String(formData.get('rentalType')),
-            location: String(formData.get('location')),
-            price_per_day: price,
-            additional_details: String(formData.get('additionalDetails')),
-            image_urls: imageUrls
-          })
-          .select()
-          
-	if (error) {
-  	    console.error('Detailed error:', {
-            message: error.message,
-           code: error.code,
-           details: error.details
-           });
-           alert(`Submission failed: ${error.message}`);
-     } else {
-      // success
-     }
+            const { data, error } = await supabase
+      .from('listings')
+      .insert({
+        owner_name: "Test User",
+        tlc_plate: "TEST123",
+        email: "test@example.com"
+      })
+      .select();
 
+    if (error) throw error;
+    console.log("Success:", data);
+    alert("Test submission worked!");
+  } catch (err) {
+    console.error("Error:", err);
+    alert(`Failed: ${err.message}`);
+  }
+});
 
 
     // PWA Installation (unchanged)
