@@ -147,68 +147,58 @@
   </footer>
 
   <script>
-    document.getElementById('listing-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      console.log("Form submission started with supabase client:", window.supabase);
-      
-      const submitBtn = document.getElementById('submit-listing');
-      const loading = document.getElementById('loading-listing');
-      
-      submitBtn.disabled = true;
-      loading.style.display = 'block';
+   document.getElementById('listing-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const submitBtn = document.getElementById('submit-listing');
+  const loading = document.getElementById('loading-listing');
+  
+  submitBtn.disabled = true;
+  loading.style.display = 'block';
 
-      try {
-        const form = e.target;
-        const formData = new FormData(form);
-        
-        // Convert price to number
-        const price = Number(formData.get('price'));
-        
-        // Upload images
-        const files = formData.getAll('images');
-        const imageUrls = [];
-        
-        for (const file of files) {
-          const fileExt = file.name.split('.').pop();
-          const fileName = `${Math.random()}.${fileExt}`;
-          
-          const { data: uploadData, error: uploadError } = await window.supabase.storage
-            .from('vehicle-images')
-            .upload(`listings/${fileName}`, file);
-          
-          if (uploadError) throw uploadError;
-          imageUrls.push(`https://dndeljolayctbafmizcl.supabase.co/storage/v1/object/public/vehicle-images/listings/${fileName}`);
-        }
-
-        // Insert listing
-        const { data, error } = await window.supabase
-          .from('listings')
-          .insert({
-            owner_name: String(formData.get('ownerName')),
-            email: String(formData.get('email')),
-            phone: String(formData.get('phone')),
-            vehicle_type: String(formData.get('vehicleType')),
-            tlc_plate: String(formData.get('tlcPlate')),
-            rental_type: String(formData.get('rentalType')),
-            location: String(formData.get('location')),
-            price_per_day: price,
-            additional_details: String(formData.get('additionalDetails')),
-            image_urls: imageUrls
-          })
-          .select()
-          .single();
-
-        if (error) throw error;
-        window.location.href = "thank-you.html";
-        
-      } catch (error) {
-        console.error('Full error:', error);
-        alert(`Submission failed: ${error.message}\n\nDetails: ${JSON.stringify(error, null, 2)}`);
-      } finally {
-        submitBtn.disabled = false;
-        loading.style.display = 'none';
+  try {
+    // First validate required fields
+    const requiredFields = ['ownerName', 'email', 'tlcPlate', 'vehicleType'];
+    for (const field of requiredFields) {
+      if (!e.target.elements[field].value.trim()) {
+        throw new Error(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
       }
+    }
+
+    // Then proceed with Supabase insert
+    const { data, error } = await supabase
+      .from('listings')
+      .insert({
+        owner_name: e.target.elements.ownerName.value,
+        email: e.target.elements.email.value,
+        phone: e.target.elements.phone.value,
+        vehicle_type: e.target.elements.vehicleType.value,
+        tlc_plate: e.target.elements.tlcPlate.value,
+        rental_type: e.target.elements.rentalType.value,
+        location: e.target.elements.location.value,
+        price_per_day: Number(e.target.elements.price.value),
+        additional_details: e.target.elements.additionalDetails.value,
+        image_urls: [] // Temporarily remove image upload for testing
+      })
+      .select();
+
+    if (error) throw error;
+    
+    window.location.href = "thank-you.html";
+    
+  } catch (error) {
+    console.error('Full error details:', {
+      message: error.message,
+      code: error.code,
+      details: error.details,
+      hint: error.hint
     });
+    alert(`Submission failed: ${error.message}`);
+  } finally {
+    submitBtn.disabled = false;
+    loading.style.display = 'none';
+  }
+});
 
     // PWA Installation (unchanged)
     let deferredPrompt;
