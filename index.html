@@ -195,20 +195,20 @@
             additional_details: String(formData.get('additionalDetails')),
             image_urls: imageUrls
           })
-          .select();
+          .select()
           
+	if (error) {
+  	    console.error('Detailed error:', {
+            message: error.message,
+           code: error.code,
+           details: error.details
+           });
+           alert(`Submission failed: ${error.message}`);
+     } else {
+      // success
+     }
 
-        if (error) throw error;
-        window.location.href = "thank-you.html";
-        
-      } catch (error) {
-        console.error('Full error:', error);
-        alert(`Submission failed: ${error.message}\n\nDetails: ${JSON.stringify(error, null, 2)}`);
-      } finally {
-        submitBtn.disabled = false;
-        loading.style.display = 'none';
-      }
-    });
+
 
     // PWA Installation (unchanged)
     let deferredPrompt;
