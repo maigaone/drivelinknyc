@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
- <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>DriveLink NYC - Your Trusted TLC Rental Marketplace</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0074D9">
@@ -12,41 +12,39 @@
   <meta name="msapplication-TileColor" content="#0074D9">
   <meta name="msapplication-config" content="/browserconfig.xml">
 
-
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-<link rel="shortcut icon" href="/assets/icons/favicon.ico">
-<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#0074D9">
-
-
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#0074D9">
 
   <link rel="stylesheet" href="assets/css/styles.css">
   
+  <!-- Load Supabase FIRST -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="assets/js/mobile-menu.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
- <script>
-  const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
-  const supabase = supabase.createClient(
-  "https://dndeljolayctbafmizcl.supabase.co",
-  "YOUR_ANON_OR_SERVICE_KEY", // From Supabase > Settings > API
-  {
-    auth: {
-      persistSession: false // Fixes token issues
-    },
-    global: {
-      headers: {
-        'Prefer': 'return=representation' // Better error messages
-      }
-    }
-  }
-);
-</script>
 
+  <!-- Initialize Supabase with proper configuration -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.supabase = supabase.createClient(
+        "https://dndeljolayctbafmizcl.supabase.co",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w",
+        {
+          auth: { persistSession: false },
+          global: {
+            headers: {
+              'Prefer': 'return=representation',
+              'Content-Type': 'application/json'
+            }
+          }
+        }
+      );
+      console.log("Supabase initialized:", window.supabase);
+    });
+  </script>
 </head>
 
 <body>
@@ -148,106 +146,100 @@
     <p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
   </footer>
 
-   <script>
-  
-
-  // Form submissions
-   document.getElementById('listing-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const submitBtn = document.getElementById('submit-listing');
-  const loading = document.getElementById('loading-listing');
-  
-  submitBtn.disabled = true;
-  loading.style.display = 'block';
-
-  try {
-    const form = e.target;
-    const formData = new FormData(form);
-    
-    // Convert price to number
-    const price = Number(formData.get('price'));
-    
-    // Upload images
-    const files = formData.getAll('images');
-    const imageUrls = [];
-    
-    for (const file of files) {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
+  <script>
+    document.getElementById('listing-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      console.log("Form submission started with supabase client:", window.supabase);
       
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('vehicle-images')
-        .upload(`listings/${fileName}`, file);
+      const submitBtn = document.getElementById('submit-listing');
+      const loading = document.getElementById('loading-listing');
       
-      if (uploadError) throw uploadError;
-      imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/vehicle-images/listings/${fileName}`);
-    }
+      submitBtn.disabled = true;
+      loading.style.display = 'block';
 
-    // Insert listing with explicit type conversion
-     const { data, error } = await supabase
-  	.from('listings')
- 	.insert({
-        owner_name: String(formData.get('ownerName')),
-        email: String(formData.get('email')),
-        phone: String(formData.get('phone')),
-        vehicle_type: String(formData.get('vehicleType')),
-        tlc_plate: String(formData.get('tlcPlate')),
-        rental_type: String(formData.get('rentalType')),
-        location: String(formData.get('location')),
-        price_per_day: Number(formData.get('price')),
-        additional_details: String(formData.get('additionalDetails')),
-        image_urls: imageUrls // From your upload code
-  })
-  .select() // REQUIRED for error details
-  .single(); // If inserting one record
-    if (error) throw error;
-    window.location.href = "thank-you.html";
-    
-  } catch (error) {
-    console.error('Full error:', error);
-    alert(`Submission failed: ${error.message}\n\nDetails: ${error.details}`);
-  } finally {
-    submitBtn.disabled = false;
-    loading.style.display = 'none';
-  }
-});
-  
-    
+      try {
+        const form = e.target;
+        const formData = new FormData(form);
+        
+        // Convert price to number
+        const price = Number(formData.get('price'));
+        
+        // Upload images
+        const files = formData.getAll('images');
+        const imageUrls = [];
+        
+        for (const file of files) {
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${Math.random()}.${fileExt}`;
+          
+          const { data: uploadData, error: uploadError } = await window.supabase.storage
+            .from('vehicle-images')
+            .upload(`listings/${fileName}`, file);
+          
+          if (uploadError) throw uploadError;
+          imageUrls.push(`https://dndeljolayctbafmizcl.supabase.co/storage/v1/object/public/vehicle-images/listings/${fileName}`);
+        }
 
-     // PWA Installation
-  let deferredPrompt;
-  const installBtn = document.createElement('button');
-  installBtn.className = 'install-btn';
-  installBtn.textContent = 'Install App';
-  document.body.appendChild(installBtn);
-  installBtn.style.display = 'none';
+        // Insert listing
+        const { data, error } = await window.supabase
+          .from('listings')
+          .insert({
+            owner_name: String(formData.get('ownerName')),
+            email: String(formData.get('email')),
+            phone: String(formData.get('phone')),
+            vehicle_type: String(formData.get('vehicleType')),
+            tlc_plate: String(formData.get('tlcPlate')),
+            rental_type: String(formData.get('rentalType')),
+            location: String(formData.get('location')),
+            price_per_day: price,
+            additional_details: String(formData.get('additionalDetails')),
+            image_urls: imageUrls
+          })
+          .select()
+          .single();
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'block';
-  });
-
-  installBtn.addEventListener('click', () => {
-    installBtn.style.display = 'none';
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted install');
+        if (error) throw error;
+        window.location.href = "thank-you.html";
+        
+      } catch (error) {
+        console.error('Full error:', error);
+        alert(`Submission failed: ${error.message}\n\nDetails: ${JSON.stringify(error, null, 2)}`);
+      } finally {
+        submitBtn.disabled = false;
+        loading.style.display = 'none';
       }
-      deferredPrompt = null;
     });
-  });
 
-  // Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js');
+    // PWA Installation (unchanged)
+    let deferredPrompt;
+    const installBtn = document.createElement('button');
+    installBtn.className = 'install-btn';
+    installBtn.textContent = 'Install App';
+    document.body.appendChild(installBtn);
+    installBtn.style.display = 'none';
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
     });
-  }
 
-</script>
-   
+    installBtn.addEventListener('click', () => {
+      installBtn.style.display = 'none';
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted install');
+        }
+        deferredPrompt = null;
+      });
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
 </body>
 </html>
