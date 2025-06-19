@@ -140,55 +140,67 @@
   
 
   // Form submissions
-  document.getElementById('listing-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const submitBtn = document.getElementById('submit-listing');
-      const loading = document.getElementById('loading-listing');
+   document.getElementById('listing-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const submitBtn = document.getElementById('submit-listing');
+  const loading = document.getElementById('loading-listing');
+  
+  submitBtn.disabled = true;
+  loading.style.display = 'block';
+
+  try {
+    const form = e.target;
+    const formData = new FormData(form);
+    
+    // Convert price to number
+    const price = Number(formData.get('price'));
+    
+    // Upload images
+    const files = formData.getAll('images');
+    const imageUrls = [];
+    
+    for (const file of files) {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
       
-      submitBtn.disabled = true;
-      loading.style.display = 'block';
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('vehicle-images')
+        .upload(`listings/${fileName}`, file);
+      
+      if (uploadError) throw uploadError;
+      imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/vehicle-images/listings/${fileName}`);
+    }
 
-      try {
-        const form = e.target;
-        const formData = new FormData(form);
-        const files = formData.getAll('images');
-        const imageUrls = [];
+    // Insert listing with explicit type conversion
+    const { data, error } = await supabase
+      .from('listings')
+      .insert({
+        owner_name: String(formData.get('ownerName')),
+        email: String(formData.get('email')),
+        phone: String(formData.get('phone')),
+        vehicle_type: String(formData.get('vehicleType')),
+        tlc_plate: String(formData.get('tlcPlate')),
+        rental_type: String(formData.get('rentalType')),
+        location: String(formData.get('location')),
+        price_per_day: price,
+        additional_details: String(formData.get('additionalDetails')),
+        image_urls: imageUrls
+      })
+      .select();  // Crucial for getting error details
 
-        for (const file of files) {
-          const fileExt = file.name.split('.').pop();
-          const fileName = `${Math.random()}.${fileExt}`;
-          
-          const { data, error } = await supabase.storage
-            .from('vehicle-images')
-            .upload(`listings/${fileName}`, file);
-          
-          if (error) throw error;
-          imageUrls.push(`${SUPABASE_URL}/storage/v1/object/public/vehicle-images/listings/${fileName}`);
-        }
-
-        const { data, error } = await supabase.from('listings').insert({
-          owner_name: formData.get('ownerName'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          vehicle_type: formData.get('vehicleType'),
-          tlc_plate: formData.get('tlcPlate'),
-          rental_type: formData.get('rentalType'),
-          location: formData.get('location'),
-          price_per_day: Number(formData.get('price')),
-          additional_details: formData.get('additionalDetails'),
-          image_urls: imageUrls
-        });
-
-        if (error) throw error;
-        window.location.href = "thank-you.html";
-      } catch (error) {
-        console.error('Error:', error);
-        alert(`Error submitting listing: ${error.message}`);
-      } finally {
-        submitBtn.disabled = false;
-        loading.style.display = 'none';
-      }
-    });
+    if (error) throw error;
+    window.location.href = "thank-you.html";
+    
+  } catch (error) {
+    console.error('Full error:', error);
+    alert(`Submission failed: ${error.message}\n\nDetails: ${error.details}`);
+  } finally {
+    submitBtn.disabled = false;
+    loading.style.display = 'none';
+  }
+});
+  
     
 
      // PWA Installation
