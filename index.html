@@ -31,7 +31,20 @@
  <script>
   const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
   const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
-  window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const supabase = supabase.createClient(
+  "https://dndeljolayctbafmizcl.supabase.co",
+  "YOUR_ANON_OR_SERVICE_KEY", // From Supabase > Settings > API
+  {
+    auth: {
+      persistSession: false // Fixes token issues
+    },
+    global: {
+      headers: {
+        'Prefer': 'return=representation' // Better error messages
+      }
+    }
+  }
+);
 </script>
 
 </head>
@@ -172,9 +185,9 @@
     }
 
     // Insert listing with explicit type conversion
-    const { data, error } = await supabase
-      .from('listings')
-      .insert({
+     const { data, error } = await supabase
+  	.from('listings')
+ 	.insert({
         owner_name: String(formData.get('ownerName')),
         email: String(formData.get('email')),
         phone: String(formData.get('phone')),
@@ -182,12 +195,12 @@
         tlc_plate: String(formData.get('tlcPlate')),
         rental_type: String(formData.get('rentalType')),
         location: String(formData.get('location')),
-        price_per_day: price,
+        price_per_day: Number(formData.get('price')),
         additional_details: String(formData.get('additionalDetails')),
-        image_urls: imageUrls
-      })
-      .select();  // Crucial for getting error details
-
+        image_urls: imageUrls // From your upload code
+  })
+  .select() // REQUIRED for error details
+  .single(); // If inserting one record
     if (error) throw error;
     window.location.href = "thank-you.html";
     
