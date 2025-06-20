@@ -166,7 +166,12 @@
     }
 
     // Then proceed with Supabase insert
+   
+ 
     const { data: { user } } = await supabase.auth.getUser();
+
+    image_urls: [], // Will be replaced with actual image URLs
+
     const { data, error } = await supabase
       .from('listings')
       .insert({
@@ -179,23 +184,21 @@
         location: e.target.elements.location.value,
         price_per_day: Number(e.target.elements.price.value),
         additional_details: e.target.elements.additionalDetails.value,
-        image_urls: [], // Will be replaced with actual image URLs
+        image_urls: imageUrls, //Use uploaded iimage URLs
         user_id: user?.id || null // 👈 THIS IS THE KEY LINE
       })
       .select();
 
     if (error) throw error;
-    
     window.location.href = "thank-you.html";
     
   } catch (error) {
-    console.error('Full error details:', {
+    console.error('Submission Error:', {
       message: error.message,
       code: error.code,
-      details: error.details,
-      hint: error.hint
+      details: error.details
     });
-    alert(`Submission failed: ${error.message}`);
+    alert(`Error: ${error.message}\n\nCheck console for details`);
   } finally {
     submitBtn.disabled = false;
     loading.style.display = 'none';
