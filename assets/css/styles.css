@@ -1000,6 +1000,21 @@ select[multiple] {
   transition: opacity 0.3s ease;
 }
 
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+/* Uses JS-calculated height */
+  height: var(--viewport-height, 100vh); 
+/* Prevents layout shift */
+
+  padding-right: var(--scrollbar-width, 0px);
+ /* Blocks iOS rubber-banding */ 
+  overscroll-behavior: none;
+/* Prevents accidental zooming */
+  touch-action: none; 
+}
+
 .modal.active {
   opacity: 1;
   pointer-events: all;
