@@ -26,8 +26,26 @@
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="assets/js/mobile-menu.js" defer></script>
 
-  <!-- Initialize Supabase with proper configuration -->
+ 
   <script>
+
+    // Calculate scrollbar width first
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+    
+    // Handle mobile viewport quirks
+    function handleViewport() {
+      document.documentElement.style.setProperty(
+        '--viewport-height',
+        `${window.innerHeight}px`
+      );
+    }
+    window.addEventListener('resize', handleViewport);
+    handleViewport();
+  })();
+
+  <!-- Initialize Supabase with proper configuration -->
+
     document.addEventListener('DOMContentLoaded', () => {
       window.supabase = supabase.createClient(
         "https://dndeljolayctbafmizcl.supabase.co",
