@@ -359,5 +359,19 @@
       elements.container.style.display = 'grid';
     }
   </script>
+<div id="contact-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h3>Contact Vehicle Owner</h3>
+    <form id="contact-form">
+      <input type="hidden" id="listing-id">
+      <input type="text" id="sender-name" placeholder="Your Name" required>
+      <input type="email" id="sender-email" placeholder="Your Email" required>
+      <input type="tel" id="sender-phone" placeholder="Your Phone">
+      <textarea id="message" placeholder="Your message..." required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</div>
 </body>
 </html>

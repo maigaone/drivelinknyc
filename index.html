@@ -165,7 +165,32 @@
       }
     }
 
-    // Then proceed with Supabase insert
+
+    // Contact Modal Handling
+const contactModal = document.getElementById('contact-modal');
+const contactForm = document.getElementById('contact-form');
+
+document.querySelectorAll('.contact-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('listing-id').value = btn.dataset.listingId;
+    contactModal.classList.remove('hidden');
+  });
+});
+
+document.querySelector('.close-modal').addEventListener('click', () => {
+  contactModal.classList.add('hidden');
+});
+
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  // Add Supabase insert logic here
+  alert('Message sent successfully!');
+  contactModal.classList.add('hidden');
+});
+
+
+
+    // Form submission
    
  
     const { data: { user } } = await supabase.auth.getUser();
