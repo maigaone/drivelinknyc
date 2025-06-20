@@ -166,6 +166,7 @@
     }
 
     // Then proceed with Supabase insert
+    const { data: { user } } = await supabase.auth.getUser();
     const { data, error } = await supabase
       .from('listings')
       .insert({
@@ -178,7 +179,8 @@
         location: e.target.elements.location.value,
         price_per_day: Number(e.target.elements.price.value),
         additional_details: e.target.elements.additionalDetails.value,
-        image_urls: [] // Temporarily remove image upload for testing
+        image_urls: [], // Will be replaced with actual image URLs
+        user_id: user?.id || null // 👈 THIS IS THE KEY LINE
       })
       .select();
 
