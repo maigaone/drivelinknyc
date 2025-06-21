@@ -190,16 +190,17 @@
     }
 
     // Apply filters and search
-    function applyFilters() {
-  const searchTerm = elements.searchInput.value.toLowerCase();
-  const typeFilter = elements.filterType.value;
-  const locationFilter = elements.filterLocation.value;
-  const rentalTypeFilter = elements.filterRentalType.value;
+  function applyFilters() {
+   const searchTerm = elements.searchInput.value.toLowerCase();
+   const typeFilter = elements.filterType.value;
+   const locationFilter = elements.filterLocation.value;
+   const rentalTypeFilter = elements.filterRentalType.value;
 
-  state.filteredListings = state.allListings.filter(listing => {
-    const matchesSearch = 
+   state.filteredListings = state.allListings.filter(listing => {
+     const matchesSearch = 
       (listing.vehicle_type?.toLowerCase().includes(searchTerm) ||
       (listing.tlc_plate?.toLowerCase().includes(searchTerm)) ||
+
       (listing.additional_details?.toLowerCase().includes(searchTerm));
     
     const matchesType = typeFilter ? listing.vehicle_type === typeFilter : true;
