@@ -163,91 +163,114 @@
     <p>© 2025 DriveLink NYC. All rights reserved.</p>
     <p>📩 <a href="mailto:info@drivelinknyc.com">info@drivelinknyc.com</a></p>
   </footer>
-
   <script>
-   document.getElementById('listing-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const submitBtn = document.getElementById('submit-listing');
-  const loading = document.getElementById('loading-listing');
-  
-  submitBtn.disabled = true;
-  loading.style.display = 'block';
 
-  try {
-    // First validate required fields
-    const requiredFields = ['ownerName', 'email', 'tlcPlate', 'vehicleType'];
-    for (const field of requiredFields) {
-      if (!e.target.elements[field].value.trim()) {
-        throw new Error(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+ // ========== LISTING FORM SUBMISSION ==========
+    document.getElementById('listing-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submit-listing');
+      const loading = document.getElementById('loading-listing');
+      
+      submitBtn.disabled = true;
+      loading.style.display = 'block';
+
+      try {
+        // Validate required fields
+        const requiredFields = ['ownerName', 'email', 'tlcPlate', 'vehicleType'];
+        for (const field of requiredFields) {
+          if (!e.target.elements[field].value.trim()) {
+            throw new Error(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+          }
+        }
+
+        // Handle image uploads (implement your actual upload logic here)
+        const imageUrls = [];
+
+        // Get user if authenticated
+        const { data: { user } } = await supabase.auth.getUser();
+
+        // Submit to Supabase
+        const { data, error } = await supabase
+          .from('listings')
+          .insert({
+            owner_name: e.target.elements.ownerName.value,
+            email: e.target.elements.email.value,
+            phone: e.target.elements.phone.value,
+            vehicle_type: e.target.elements.vehicleType.value,
+            tlc_plate: e.target.elements.tlcPlate.value,
+            rental_type: e.target.elements.rentalType.value,
+            location: e.target.elements.location.value,
+            price_per_day: Number(e.target.elements.price.value),
+            additional_details: e.target.elements.additionalDetails.value,
+            image_urls: imageUrls,
+            user_id: user?.id || null
+          })
+          .select();
+
+        if (error) throw error;
+        window.location.href = "thank-you.html";
+        
+      } catch (error) {
+        console.error('Submission Error:', error);
+        alert(`Error: ${error.message}`);
+      } finally {
+        submitBtn.disabled = false;
+        loading.style.display = 'none';
       }
-    }
+    });
 
+    // ========== CONTACT MODAL HANDLING ==========
+    const contactModal = document.getElementById('contact-modal');
+    const contactForm = document.getElementById('contact-form');
 
-    // Contact Modal Handling
-const contactModal = document.getElementById('contact-modal');
-const contactForm = document.getElementById('contact-form');
+    if (contactModal && contactForm) {
+      // Open modal when contact buttons are clicked
+      document.querySelectorAll('.contact-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (btn.dataset.listingId) {
+            document.getElementById('listing-id').value = btn.dataset.listingId;
+          }
+          contactModal.classList.remove('hidden');
+        });
+      });
 
-document.querySelectorAll('.contact-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.getElementById('listing-id').value = btn.dataset.listingId;
-    contactModal.classList.remove('hidden');
-  });
-});
+      // Close modal
+      document.querySelector('.close-modal')?.addEventListener('click', () => {
+        contactModal.classList.add('hidden');
+      });
 
-document.querySelector('.close-modal').addEventListener('click', () => {
-  contactModal.classList.add('hidden');
-});
+      // Handle contact form submission
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        
+        try {
+          submitBtn.disabled = true;
+          
+          const { error } = await supabase
+            .from('messages')
+            .insert({
+              name: e.target.elements.name.value,
+              email: e.target.elements.email.value,
+              message: e.target.elements.message.value,
+              listing_id: e.target.elements.listingId.value || null
+            });
 
-contactForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  // Add Supabase insert logic here
-  alert('Message sent successfully!');
-  contactModal.classList.add('hidden');
-});
-
-
-
-    // Handle file uploads
-    const imageFiles = form.elements['images'].files;
-    let imageUrls = [];
+          if (error) throw error;
+          
+          alert('Message sent successfully!');
+          contactModal.classList.add('hidden');
+          contactForm.reset();
+          
+        } catch (error) {
+          console.error('Contact Error:', error);
+          alert('Failed to send message. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
     
-    if (imageFiles.length > 0) {
-      imageUrls = await uploadListingImages(imageFiles);
-    }
-
-    // Get user if authenticated
-    const { data: { user } } = await supabase.auth.getUser();
-
-    // Submit to Supabase
-     const { data, error } = await supabase
-      .from('listings')
-      .insert({
-        owner_name: e.target.elements.ownerName.value,
-        email: e.target.elements.email.value,
-        phone: e.target.elements.phone.value,
-        vehicle_type: e.target.elements.vehicleType.value,
-        tlc_plate: e.target.elements.tlcPlate.value,
-        rental_type: e.target.elements.rentalType.value,
-        location: e.target.elements.location.value,
-        price_per_day: Number(e.target.elements.price.value),
-        additional_details: e.target.elements.additionalDetails.value,
-        image_urls: imageUrls, // Use uploaded image URLs
-        user_id: user?.id || null // 👈 Perfectly placed!
-      })
-      .select();
-
-    if (error) throw error;
-    window.location.href = "thank-you.html";
-    
-  } catch (error) {
-    console.error('Submission Error:', error);
-    alert(`Error: ${error.message}`);
-  } finally {
-    submitBtn.disabled = false;
-    loading.style.display = 'none';
-  }
-});
     // PWA Installation (unchanged)
     let deferredPrompt;
     const installBtn = document.createElement('button');
