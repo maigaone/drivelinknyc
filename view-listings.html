@@ -9,7 +9,16 @@
   <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/mobile-menu.js" defer></script>
+
+   <script>
+    // Initialize Supabase in head
+    window.supabase = supabase.createClient(
+      "https://dndeljolayctbafmizcl.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w"
+    );
+  </script>
 </head>
+
 <body>
   <header class="site-header">
     <div class="header-container">
@@ -103,11 +112,7 @@
   </main>
 
   <script>
-    // Supabase Configuration
-    const SUPABASE_URL = "https://dndeljolayctbafmizcl.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w";
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+   
     // App State
     const state = {
       currentPage: 1,
