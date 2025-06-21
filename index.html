@@ -42,7 +42,7 @@
     }
     window.addEventListener('resize', handleViewport);
     handleViewport();
-  })();
+  });
 
   <!-- Initialize Supabase with proper configuration -->
 
@@ -213,7 +213,7 @@ contactForm.addEventListener('submit', async (e) => {
  
     const { data: { user } } = await supabase.auth.getUser();
 
-    image_urls: [], // Will be replaced with actual image URLs
+    const image_urls: [], // Will be replaced with actual image URLs
 
     const { data, error } = await supabase
       .from('listings')
