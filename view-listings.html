@@ -201,7 +201,7 @@
       (listing.vehicle_type?.toLowerCase().includes(searchTerm) ||
       (listing.tlc_plate?.toLowerCase().includes(searchTerm)) ||
 
-      (listing.additional_details?.toLowerCase().includes(searchTerm));
+      (listing.additional_details?.toLowerCase().includes(searchTerm))
     
     const matchesType = typeFilter ? listing.vehicle_type === typeFilter : true;
     const matchesLocation = locationFilter ? listing.location === locationFilter : true;
