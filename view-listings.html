@@ -191,35 +191,35 @@
 
     // Apply filters and search
     function applyFilters() {
-      const searchTerm = elements.searchInput.value.toLowerCase();
-      const typeFilter = elements.filterType.value;
-      const locationFilter = elements.filterLocation.value;
-      const rentalTypeFilter = elements.filterRentalType.value;
+  const searchTerm = elements.searchInput.value.toLowerCase();
+  const typeFilter = elements.filterType.value;
+  const locationFilter = elements.filterLocation.value;
+  const rentalTypeFilter = elements.filterRentalType.value;
 
-      state.filteredListings = state.allListings.filter(listing => {
-        const matchesSearch = 
-          (listing.vehicle_type?.toLowerCase().includes(searchTerm) ||
-          (listing.tlc_plate?.toLowerCase().includes(searchTerm)) ||
-          (listing.additional_details?.toLowerCase().includes(searchTerm));
-        
-        const matchesType = typeFilter ? listing.vehicle_type === typeFilter : true;
-        const matchesLocation = locationFilter ? listing.location === locationFilter : true;
-        const matchesRentalType = rentalTypeFilter ? listing.rental_type === rentalTypeFilter : true;
+  state.filteredListings = state.allListings.filter(listing => {
+    const matchesSearch = 
+      (listing.vehicle_type?.toLowerCase().includes(searchTerm) ||
+      (listing.tlc_plate?.toLowerCase().includes(searchTerm)) ||
+      (listing.additional_details?.toLowerCase().includes(searchTerm));
+    
+    const matchesType = typeFilter ? listing.vehicle_type === typeFilter : true;
+    const matchesLocation = locationFilter ? listing.location === locationFilter : true;
+    const matchesRentalType = rentalTypeFilter ? listing.rental_type === rentalTypeFilter : true;
 
-        return matchesSearch && matchesType && matchesLocation && matchesRentalType;
-      });
+    return matchesSearch && matchesType && matchesLocation && matchesRentalType;
+  });
 
-      state.currentPage = 1;
-      state.totalPages = Math.ceil(state.filteredListings.length / state.itemsPerPage);
-      
-      if (state.filteredListings.length === 0) {
-        showNoResults();
-      } else {
-        hideNoResults();
-        renderListings();
-        updatePagination();
-      }
-    }
+  state.currentPage = 1;
+  state.totalPages = Math.ceil(state.filteredListings.length / state.itemsPerPage);
+  
+  if (state.filteredListings.length === 0) {
+    showNoResults();
+  } else {
+    hideNoResults();
+    renderListings();
+    updatePagination();
+  }
+}
 
     // Reset all filters
     function resetFilters() {
