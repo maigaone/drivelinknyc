@@ -220,20 +220,20 @@ contactForm.addEventListener('submit', async (e) => {
     const { data: { user } } = await supabase.auth.getUser();
 
     // Submit to Supabase
-    const { data, error } = await supabase
+     const { data, error } = await supabase
       .from('listings')
       .insert({
-        owner_name: formData.get('ownerName'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        vehicle_type: formData.get('vehicleType'),
-        tlc_plate: formData.get('tlcPlate'),
-        rental_type: formData.get('rentalType'),
-        location: formData.get('location'),
-        price_per_day: Number(formData.get('price')),
-        additional_details: formData.get('additionalDetails'),
-        image_urls: imageUrls,
-        user_id: user?.id || null
+        owner_name: e.target.elements.ownerName.value,
+        email: e.target.elements.email.value,
+        phone: e.target.elements.phone.value,
+        vehicle_type: e.target.elements.vehicleType.value,
+        tlc_plate: e.target.elements.tlcPlate.value,
+        rental_type: e.target.elements.rentalType.value,
+        location: e.target.elements.location.value,
+        price_per_day: Number(e.target.elements.price.value),
+        additional_details: e.target.elements.additionalDetails.value,
+        image_urls: imageUrls, // Use uploaded image URLs
+        user_id: user?.id || null // 👈 Perfectly placed!
       })
       .select();
 
