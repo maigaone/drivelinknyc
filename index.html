@@ -42,26 +42,24 @@
     }
     window.addEventListener('resize', handleViewport);
     handleViewport();
-  });
+  
 
   <!-- Initialize Supabase with proper configuration -->
 
-    document.addEventListener('DOMContentLoaded', () => {
-      window.supabase = supabase.createClient(
-        "https://dndeljolayctbafmizcl.supabase.co",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w",
-        {
-          auth: { persistSession: false },
-          global: {
-            headers: {
-              'Prefer': 'return=representation',
-              'Content-Type': 'application/json'
-            }
-          }
+    // Initialize Supabase immediately
+  window.supabase = supabase.createClient(
+    "https://dndeljolayctbafmizcl.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZGVsam9sYXljdGJhZm1pemNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NjIxMDUsImV4cCI6MjA2NTQzODEwNX0.OiK-9-BN0NdgSF1ROmEepANA8ZMJ7kMipCpR8xJSA2w",
+    {
+      auth: { persistSession: true }, // Changed to true
+      global: {
+        headers: {
+          'Prefer': 'return=representation',
+          'Content-Type': 'application/json'
         }
-      );
-      console.log("Supabase initialized:", window.supabase);
-    });
+      }
+    }
+  );
   </script>
 </head>
 
